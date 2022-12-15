@@ -1,40 +1,25 @@
 import React from 'react';
-import './App.css';
-import { Canvas } from './Canvas'
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { ClearCanvasButton } from './CanvasClearButton';
+import '../resources/styles/App.css';
+
+import Home from "./Home";
+import {Route, Routes} from "react-router-dom";
+import NavbarMenu from "../components/NavbarMenu";
+import About from "./About";
+import Transliterate from "./Transliterate";
+import Acknowledgement from "./Acknowledgement";
 
 function App() {
   return (
     <>
-        <Navbar bg="dark" expand="lg">
-            <Container>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
-                                Separated link
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-        <Canvas  />
-        <ClearCanvasButton/>
+        <NavbarMenu />
+        <div className="container">
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/transliterate" element={<Transliterate />} />
+                <Route path="/acknowledgement" element={<Acknowledgement />} />
+            </Routes>
+        </div>
     </>
   );
 }

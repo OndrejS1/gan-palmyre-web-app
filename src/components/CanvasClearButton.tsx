@@ -1,8 +1,9 @@
 import React from 'react'
-import { useCanvas } from './CanvasContext'
+import { useCanvas } from '../context/CanvasContext'
+import {Button, ButtonProps} from "react-bootstrap";
 
-export const ClearCanvasButton: React.FunctionComponent<any> = () => {
+export const ClearCanvasButton: React.FunctionComponent<ButtonProps> = () => {
     const { clearCanvas } = useCanvas()
 
-    return <button onClick={clearCanvas}>Clear canvas</button>
+    return <Button variant="outline-warning" onClick={clearCanvas}>Reset</Button>
 }

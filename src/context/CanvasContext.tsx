@@ -1,40 +1,40 @@
 import React, {FC, ReactNode, useContext, useRef, useState} from "react";
+import placeholderImage from '../resources/image/placeholder-palmyre.png';
 
 const CanvasContext = React.createContext(null);
-
 
 interface Props {
     children?: ReactNode
 }
 
-interface CanvasSize {
-    width?: number
-    height?: number
-}
-
 export const CanvasProvider: FC<Props> = ({ children }): any => {
-    const [isDrawing, setIsDrawing] = useState(false)
-    const canvasRef = useRef(null);
-    const contextRef = useRef(null);
-
-    const CanvasSize = {
-        canvasWidth: 800,
-        canvasHeight: 800
-    }
+    const [isDrawing, setIsDrawing] = useState(false);
+    const [count, setCount] = useState(0);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const contextRef = useRef<CanvasRenderingContext2D | null>(null);
 
     const prepareCanvas = () => {
+
         const canvas = canvasRef.current
-        canvas.width = window.innerWidth * 2;
-        canvas.height = window.innerHeight * 2;
-        canvas.style.width = `${window.innerWidth}px`;
-        canvas.style.height = `${window.innerHeight}px`;
-        canvas.style.borderStyle = `border-width: thick`;
+        canvas.width = 500 * 2;
+        canvas.height = 500 * 2;
+
+        canvas.style.width = `500px`;
+        canvas.style.height = `500px`;
 
         const context = canvas.getContext("2d")
+
         context.scale(2, 2);
         context.lineCap = "round";
         context.strokeStyle = "black";
-        context.lineWidth = 5;
+        context.lineWidth = 15;
+
+        const image = new Image();
+        image.src = placeholderImage;
+        image.onload = () => {
+            context.drawImage(image, 0, 0, 500, 500);
+        };
+
         contextRef.current = context;
     };
 
@@ -43,29 +43,38 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         const { offsetX, offsetY } = nativeEvent;
         contextRef.current.beginPath();
         contextRef.current.moveTo(offsetX, offsetY);
+
         setIsDrawing(true);
     };
 
-    const finishDrawing = () => {
+    const finishDrawing = (): void => {
         contextRef.current.closePath();
         setIsDrawing(false);
     };
 
-    // @ts-ignore
-    const draw = ({ nativeEvent }) => {
+    const draw = ({ nativeEvent }: any) => {
+        if(count > 0 && count < 2) {
+            clearPlaceholder();
+        }
+
         if (!isDrawing) {
             return;
         }
+        setCount(count+1)
         const { offsetX, offsetY } = nativeEvent;
         contextRef.current.lineTo(offsetX, offsetY);
         contextRef.current.stroke();
     };
 
-    const clearCanvas = () => {
-        const canvas = canvasRef.current;
-        const context = canvas.getContext("2d")
+    const clearCanvas = (): void => {
+        prepareCanvas();
+        setCount(0);
+    }
+
+    const clearPlaceholder = (): void => {
+        const context = canvasRef.current.getContext("2d")
         context.fillStyle = "white"
-        context.fillRect(0, 0, canvas.width, canvas.height)
+        context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height)
     }
 
     return (
@@ -77,7 +86,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
                 startDrawing,
                 finishDrawing,
                 clearCanvas,
-                draw,
+                draw
             }}
         >
             {children}
