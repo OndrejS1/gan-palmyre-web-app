@@ -90,6 +90,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         savedResults.push({"palmyreLetter":resultClass, "probability":resultProbability, "savedImg":lastEvaluatedImage})
         setSavedResult(savedResults);
         setReload(!reload);
+        setPredictionResult([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}])
 
     }
 
