@@ -5,5 +5,5 @@ import {Button, ButtonProps} from "react-bootstrap";
 export const ClearCanvasButton: React.FunctionComponent<ButtonProps> = () => {
     const { clearCanvas } = useCanvas()
 
-    return <Button variant="outline-warning" onClick={clearCanvas}>Reset</Button>
+    return <Button className="mt-3" variant="outline-warning" onClick={clearCanvas}>Reset</Button>
 }

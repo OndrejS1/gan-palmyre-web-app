@@ -4,8 +4,8 @@ import {Button, ButtonProps} from "react-bootstrap";
 
 
 export const SaveCanvasButton: React.FunctionComponent<ButtonProps> = () => {
-    const { handleSendClick } = useResultTable();
+    const { handleSaveClick } = useResultTable();
 
-    return <Button variant="outline-success" onClick={handleSendClick}>Evaluate</Button>
+    return <Button className="mt-3" variant="outline-info" onClick={handleSaveClick}>Save</Button>
 
 }

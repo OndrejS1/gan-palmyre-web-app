@@ -10,6 +10,15 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
         loadTable();
     }, [predictionResult]);
 
+    const saveResult = (e: any) =>{
+      //  const table: HTMLElement = document.querySelector("");
+
+        var tds = document.querySelectorAll('#resultTable > table > tbody'), i;
+        for(i = 0; i < tds.length; ++i) {
+            console.log(tds[i])
+        }
+    }
+
     function loadTable(): ReactElement {
         if(predictionResult === undefined) {
             return;
@@ -20,9 +29,10 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
                     return (
                         <>
                             <tr key={index}>
-                                <td key={index+1}>{index+1}</td>
-                                <td key={index+2}>{prediction.class}</td>
-                                <td key={index+3}>{prediction.probability}</td>
+                                <td key={index}>{index}</td>
+                                <td key={index}>{prediction.class}</td>
+                                <td key={index}>{prediction.probability}</td>
+                                <td key={index}><input type="radio" key={index} name="radio1" onChange={saveResult}/></td>
                             </tr>
                         </>
                     );
@@ -37,6 +47,7 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
                     <th>#</th>
                     <th>Palmyre letter</th>
                     <th>Probability</th>
+                    <th>Choice</th>
                 </tr>
                 </thead>
                 {

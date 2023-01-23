@@ -11,7 +11,6 @@ export default function NavbarMenu() {
                         width="100"
                         height="80"
                         alt="CZU Logo"></img>Palmyre OCR</CustomLink>
-
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Nav className="me-auto">

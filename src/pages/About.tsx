@@ -1,10 +1,13 @@
 import React from "react";
+import ImageAnnotation from "../components/ImageAnnotation";
 
 function About() {
     return (
-        <>
-            <h1> Hello form About page</h1>
-        </>
+
+
+
+            <ImageAnnotation />
+
     );
 }
 

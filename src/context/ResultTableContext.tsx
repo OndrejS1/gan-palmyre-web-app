@@ -11,16 +11,45 @@ interface Props {
 export type PredictionResponse = {
     class: string,
     probability: string
+    choice: boolean
+}
+
+export type SavedResult = {
+    palmyreLetter: string,
+    probability: string
 }
 
 export const ResultTableProvider: FC<Props> = ({ children }): any => {
 
-    const { canvasRef } = useCanvas();
-    const [predictionResult, setPredictionResult] = useState<Array<PredictionResponse>>([{"class": " ", "probability": ""}, {"class": " ", "probability": ""}]);
+    const { canvasRef, cutSquareFromImage } = useCanvas();
+    const [predictionResult, setPredictionResult] = useState<Array<PredictionResponse>>([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}]);
+    const [savedResults, setSavedResult] = useState<Array<SavedResult>>([{"palmyreLetter": " ", "probability": ""}, {"palmyreLetter": " ", "probability": ""}]);
+    const handleEvaluateClick = (isHandwritten: boolean) => {
+        console.log(isHandwritten)
 
-    const handleSendClick = () => {
-        evaluateHandwrittenCanvasSnapshot()
-            .then(result => setPredictionResult(result));
+        if (isHandwritten) {
+            evaluateHandwrittenCanvasSnapshot()
+                .then(result => setPredictionResult(result));
+        } else {
+            handleEvaluateAnnotationClick();
+        }
+    }
+
+    const handleEvaluateAnnotationClick = () => {
+        cutSquareFromImage().then((res: string) => evaluateAnnotationCanvasSnapshot(res)
+            .then(result => setPredictionResult(result)))
+    }
+
+    const evaluateAnnotationCanvasSnapshot = async (annotationResult: string) => {
+        const formData = new FormData();
+        formData.append('imageBase64', annotationResult);
+
+        return fetch(
+            'http://127.0.0.1:5000/predict',
+            {
+                method: 'post',
+                body: formData
+            }).then(response => response.json());
     }
 
     const evaluateHandwrittenCanvasSnapshot = async () => {
@@ -40,16 +69,13 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
             }).then(response => response.json());
     }
 
-
-
-
     return (
         <ResultTableContext.Provider
             value={{
                 predictionResult,
-                handleSendClick
-            }}
-        >
+                handleEvaluateClick,
+                handleEvaluateAnnotationClick
+            }}>
             {children}
         </ResultTableContext.Provider>
     );
