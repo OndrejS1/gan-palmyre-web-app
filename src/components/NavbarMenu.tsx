@@ -3,7 +3,7 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 
 export default function NavbarMenu() {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="dark" expand="lg">
             <Container>
                 <Navbar.Brand>
                     <CustomLink to="/"><img

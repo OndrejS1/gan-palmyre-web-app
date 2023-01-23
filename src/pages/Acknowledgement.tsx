@@ -1,9 +1,16 @@
 import React from "react";
+import {Container} from "react-bootstrap";
 
 function Acknowledgement() {
     return (
         <>
-            <h1> Hello form Acknowledgement page</h1>
+            <Container>
+                <h1 className="mt-5">Acknowledgement</h1>
+
+                <p>
+
+                </p>
+            </Container>
         </>
     );
 }

@@ -1,9 +1,16 @@
 import React from "react";
+import {Container} from "react-bootstrap";
 
 function Transliterate() {
     return (
         <>
-            <h1> Hello form Transliterate page</h1>
+            <Container>
+                <h1 className="mt-5">Transliterate</h1>
+
+                <p>
+
+                </p>
+            </Container>
         </>
     );
 }

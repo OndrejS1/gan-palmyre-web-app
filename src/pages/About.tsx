@@ -1,13 +1,17 @@
 import React from "react";
-import ImageAnnotation from "../components/ImageAnnotation";
+import {Container} from "react-bootstrap";
 
 function About() {
     return (
+        <>
+            <Container>
+                <h1 className="mt-5">About</h1>
 
+                <p>
 
-
-            <ImageAnnotation />
-
+                </p>
+            </Container>
+        </>
     );
 }
 

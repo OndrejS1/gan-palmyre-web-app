@@ -124,6 +124,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
     }
 
     const loadImage = () => {
+
         const fileInput = document.getElementById("fileInput");
         const uploadWindow = document.getElementById("fileUploadField");
         uploadWindow.style.height = "0";
@@ -132,11 +133,14 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         image = new Image();
         // @ts-ignore
         image.src = URL.createObjectURL(fileInput.files[0]);
+        console.log(image.src)
 
         image.onload = function() {
             scaleImage(image, 650, 650);
             // Set the canvas dimensions
             canvas = document.getElementById("canvas");
+
+            console.log(canvas,image)
             canvas.width = image.width;
             canvas.height = image.height;
             // Get the canvas context
@@ -196,11 +200,26 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         contextRef.current = context;
     };
 
-    const clearCanvas = (): void => {
-        const uploadWindow = document.getElementById("fileUploadField");
-        uploadWindow.style.visibility = "collapse";
-        prepareCanvas();
-        setCount(0);
+    const clearCanvas = () => {
+        if(!handwritten) {
+            const cvs = document.getElementById("canvas");
+            const uploadWindow = document.getElementById("fileUploadField");
+
+            if(cvs != null) {
+                document.getElementById("canvas").remove();
+                uploadWindow.style.height = "200";
+                uploadWindow.style.visibility = "visible";
+
+                const canv = document.createElement('canvas');
+                canv.id = 'canvas';
+
+                document.body.appendChild(canv); // adds the canvas to the body element
+                document.getElementById('imageBox').appendChild(canv); // adds the canvas to #someBox
+            }
+        } else {
+            prepareCanvas();
+            setCount(0);
+        }
     }
 
     /* Handwriting on canvas */

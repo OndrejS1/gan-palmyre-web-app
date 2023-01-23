@@ -1,4 +1,23 @@
 
 nav > div > span > li {
   list-style-type: none;
+  color: #eeeeee;
+}
+
+
+nav > div > div > li > a {
+  text-decoration: none;
+  color: #eeeeee;
+  font-weight: bold;
+}
+
+nav > div > span > li > a {
+  text-decoration: none;
+  color: #eeeeee;
+  font-weight: bold;
+}
+
+td {
+  text-align: center;
+  vertical-align:middle;
 }

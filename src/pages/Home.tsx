@@ -1,9 +1,9 @@
 import { Canvas } from "../components/Canvas";
 import { ClearCanvasButton } from "../components/CanvasClearButton";
-import React, {useState} from "react";
+import React,{useState} from "react";
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import {ResultTable} from "../components/ResultTable";
-import {ResultTableProvider, useResultTable} from "../context/ResultTableContext";
+import {ResultTableProvider} from "../context/ResultTableContext";
 import {CanvasEvaluateButton} from "../components/CanvasEvaluateButton";
 import {SaveCanvasButton} from "../components/CanvasSaveButton";
 import {SavedTranscriptTable} from "../components/SavedTranscriptTable";
@@ -22,15 +22,18 @@ function Home() {
 
     // @ts-ignore
     return (
-        <Container className="mt-5">
-            <h1 className="mb-5"> Palmyre Drawing Pad</h1>
-            <ResultTableProvider>
+        <Container className="mt-5" style={{backgroundColor: '#161617'}}>
+            <Row>
+                <Col><h1 className="mb-5" style={{color: '#FFFFFF'}}>Palmyre Translation Tool</h1></Col>
 
-                <Row>
+                <Col>
                     <Button className={`toggle-button ${isHandwritten ? 'active' : ''}`} onClick={handleToggle}>
-                        {isHandwritten ? 'Handwritten' : 'Image Annotation'}
+                         {!isHandwritten ? 'Switch to handwritten input' : 'Switch to Image annotation input'}
                     </Button>
-                </Row>
+                </Col>
+            </Row>
+
+            <ResultTableProvider>
                 <Row>
                         {isHandwritten ? <Canvas /> : <ImageAnnotation />}
                     <Col>
@@ -46,7 +49,7 @@ function Home() {
                 </Row>
                 <Row>
                     <Col>
-                        <h2>Saved Choices</h2>
+                        <h2 className="mt-2 mb-3" style={{color: '#FFFFFF'}}>Translations</h2>
                         <SavedTranscriptTable/>
                     </Col>
 

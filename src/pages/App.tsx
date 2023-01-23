@@ -9,10 +9,11 @@ import Transliterate from "./Transliterate";
 import Acknowledgement from "./Acknowledgement";
 
 function App() {
+
   return (
     <>
         <NavbarMenu />
-        <div className="container">
+        <div className="container" style={{backgroundColor: '#161617'}}>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
@@ -25,3 +26,4 @@ function App() {
 }
 
 export default App;
+

@@ -4,19 +4,14 @@ import {PredictionResponse, useResultTable} from "../context/ResultTableContext"
 
 export const ResultTable: React.FunctionComponent<TableProps> = () => {
 
-    const { predictionResult } = useResultTable()
+    const {predictionResult, savedResults, setSavedResult, lastEvaluatedImage} = useResultTable()
 
     useEffect(() => {
         loadTable();
     }, [predictionResult]);
 
-    const saveResult = (e: any) =>{
-      //  const table: HTMLElement = document.querySelector("");
+    const saveResult = () => {
 
-        var tds = document.querySelectorAll('#resultTable > table > tbody'), i;
-        for(i = 0; i < tds.length; ++i) {
-            console.log(tds[i])
-        }
     }
 
     function loadTable(): ReactElement {
@@ -24,15 +19,15 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
             return;
         }
 
-        return <tbody>
+        return <tbody id={"result-table-body"}>
                 { predictionResult.map((prediction: PredictionResponse, index: number) => {
                     return (
                         <>
-                            <tr key={index}>
-                                <td key={index}>{index}</td>
-                                <td key={index}>{prediction.class}</td>
-                                <td key={index}>{prediction.probability}</td>
-                                <td key={index}><input type="radio" key={index} name="radio1" onChange={saveResult}/></td>
+                            <tr key={index} id={"row" + index+1}>
+                                <td key={index+1}>{index+1}</td>
+                                <td key={prediction.class}>{prediction.class}</td>
+                                <td key={prediction.probability}>{prediction.probability}</td>
+                                <td key={index+100}><input type="radio" key={index} id={"inputchoice"+index} name="radio1" onClick={() => saveResult()}/></td>
                             </tr>
                         </>
                     );
@@ -41,7 +36,7 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
     }
 
     return (
-            <Table striped bordered hover variant="dark">
+            <Table striped bordered hover variant="dark" id={"resultTable2"}>
                 <thead>
                 <tr>
                     <th>#</th>
