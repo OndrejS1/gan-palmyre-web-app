@@ -11,9 +11,6 @@ const ImageAnnotation = () => {
     const [, updateState] = React.useState();
     // @ts-ignore
     React.useCallback(() => updateState({}), [reload]);
-    console.log("render");
-
-
 
     return (
         <Col id={"imageBox"}>

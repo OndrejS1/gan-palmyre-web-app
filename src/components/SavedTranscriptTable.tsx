@@ -19,7 +19,6 @@ export const SavedTranscriptTable: React.FunctionComponent<TableProps> = () => {
 
     function loadTable(): ReactElement {
         if(savedResults === undefined) {
-            console.log("tady")
             return;
         }
 

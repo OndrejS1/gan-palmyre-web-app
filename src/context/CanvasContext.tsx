@@ -25,7 +25,6 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         if(isMobile) {
             if(e instanceof TouchEvent) {
                 const touch = e.touches[0];
-                console.log(touch)
                 // @ts-ignore
                 annotation.startX = touch.clientX - canvas.offsetLeft;
                 // @ts-ignore
@@ -66,8 +65,6 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         // @ts-ignore
         const height = annotation.endY - annotation.startY;
 
-        console.log(width, height)
-
         if(width > height){
             // @ts-ignore
             context.strokeRect(annotation.startX, annotation.startY, height, height);
@@ -103,7 +100,6 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
             };
         }
 
-        console.log(annotation.startX, annotation.startY, square.size)
         // @ts-ignore
         if(isMobile) {
             canvas.removeEventListener("touchmove", drawAnnotation)
@@ -143,11 +139,8 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         newCtx.drawImage(canvas, square.x, square.y, square.size, square.size, 0, 0, 100, 100);
 
         // Get the new data URL
-        const newDataUrl = newCanvas.toDataURL("image/png");
-
-        console.log(newDataUrl)
         // Return the new data URL
-        return newDataUrl;
+        return newCanvas.toDataURL("image/png");
     }
 
     const loadImage = () => {
@@ -160,14 +153,11 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         image = new Image();
         // @ts-ignore
         image.src = URL.createObjectURL(fileInput.files[0]);
-        console.log(image.src)
-
         image.onload = function() {
             scaleImage(image, 650, 650);
             // Set the canvas dimensions
             canvas = document.getElementById("canvas");
 
-            console.log(canvas,image)
             canvas.width = image.width;
             canvas.height = image.height;
             // Get the canvas context
