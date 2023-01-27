@@ -40,3 +40,11 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Learn More
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## TODO
+
+- Write documentation for deployment + run service as container inside SystemD
+- Add environment deployment variables
+- Add error handling of backend responses
+- Allow select whole column in table when picking the choice

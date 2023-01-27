@@ -1,5 +1,6 @@
 import React, {FC, ReactNode, useContext, useRef, useState} from "react";
 import placeholderImage from '../resources/image/placeholder-palmyre.png';
+import {isMobile} from 'react-device-detect';
 
 const CanvasContext = React.createContext(null);
 
@@ -18,17 +19,29 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
     const annotation:any = {};
     let canvas:any, context:any, image: HTMLImageElement;
 
-    const startAnnotation = (e: MouseEvent) => {
-        // @ts-ignore
-        annotation.startX = e.clientX - canvas.offsetLeft;
-        // @ts-ignore
-        annotation.startY = e.clientY - canvas.offsetTop;
+    const startAnnotation = (e: MouseEvent | TouchEvent) => {
+        e.preventDefault();
 
-        // @ts-ignore
-        canvas.addEventListener("mousemove", drawAnnotation);
+        if(isMobile) {
+            if(e instanceof TouchEvent) {
+                const touch = e.touches[0];
+                console.log(touch)
+                // @ts-ignore
+                annotation.startX = touch.clientX - canvas.offsetLeft;
+                // @ts-ignore
+                annotation.startY = touch.clientY - canvas.offsetTop;
+                canvas.addEventListener("touchmove", drawAnnotation);
+            }
+        } else {
+            // @ts-ignore
+            annotation.startX = e.clientX - canvas.offsetLeft;
+            // @ts-ignore
+            annotation.startY = e.clientY - canvas.offsetTop;
+            canvas.addEventListener("mousemove", drawAnnotation);
+        }
     };
 
-    const drawAnnotation = (e: MouseEvent) => {
+    const drawAnnotation = (e: MouseEvent | TouchEvent) => {
         context.strokeStyle = "red";
 
         // @ts-ignore
@@ -36,14 +49,24 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         // @ts-ignore
         context.drawImage(image, 0, 0, image.width, image.height);
         // @ts-ignore
-        annotation.endX = e.clientX - canvas.offsetLeft;
-        // @ts-ignore
-        annotation.endY = e.clientY - canvas.offsetTop;
+
+        if(isMobile && e instanceof TouchEvent) {
+            annotation.endX = e.touches[0].clientX - canvas.offsetLeft;
+            // @ts-ignore
+            annotation.endY = e.touches[0].clientY - canvas.offsetTop;
+        } else {
+            // @ts-ignore
+            annotation.endX = e.clientX - canvas.offsetLeft;
+            // @ts-ignore
+            annotation.endY = e.clientY - canvas.offsetTop;
+        }
 
         // @ts-ignore
         const width = annotation.endX - annotation.startX;
         // @ts-ignore
         const height = annotation.endY - annotation.startY;
+
+        console.log(width, height)
 
         if(width > height){
             // @ts-ignore
@@ -56,7 +79,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         square = { x: annotation.startX, y: annotation.startY, size: height }
     };
 
-    const endAnnotation = (e: MouseEvent) => {
+    const endAnnotation = (e: MouseEvent | TouchEvent) => {
         // @ts-ignore
         const width = annotation.endX - annotation.startX;
         // @ts-ignore
@@ -82,7 +105,11 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
 
         console.log(annotation.startX, annotation.startY, square.size)
         // @ts-ignore
-        canvas.removeEventListener("mousemove", drawAnnotation);
+        if(isMobile) {
+            canvas.removeEventListener("touchmove", drawAnnotation)
+        } else {
+            canvas.removeEventListener("mousemove", drawAnnotation);
+        }
     };
 
     async function cutSquareFromImage(): Promise<string>  {
@@ -146,11 +173,18 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
             // Get the canvas context
             context = canvas.getContext("2d");
             context.drawImage(image, 0, 0, image.width, image.height);
-            // @ts-ignore
-            canvas.addEventListener("mousedown", startAnnotation);
-            // @ts-ignore
-            canvas.addEventListener("mouseup", endAnnotation);
 
+            if(isMobile) {
+                // @ts-ignore
+                canvas.addEventListener("touchstart", startAnnotation);
+                // @ts-ignore
+                canvas.addEventListener("touchend", endAnnotation);
+            } else {
+                // @ts-ignore
+                canvas.addEventListener("mousedown", startAnnotation);
+                // @ts-ignore
+                canvas.addEventListener("mouseup", endAnnotation);
+            }
             };
     }
 
