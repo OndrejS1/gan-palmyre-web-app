@@ -5,8 +5,8 @@ import Home from "./Home";
 import {Route, Routes} from "react-router-dom";
 import NavbarMenu from "../components/NavbarMenu";
 import About from "./About";
-import Transliterate from "./Transliterate";
 import Acknowledgement from "./Acknowledgement";
+import Contacts from "./Contacts";
 
 function App() {
 
@@ -17,7 +17,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/transliterate" element={<Transliterate />} />
+                <Route path="/contacts" element={<Contacts />} />
                 <Route path="/acknowledgement" element={<Acknowledgement />} />
             </Routes>
         </div>

@@ -15,8 +15,8 @@ export default function NavbarMenu() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Nav className="me-auto">
                     <CustomLink to="/about">About</CustomLink>
-                    <CustomLink to="/transliterate">Transliterate</CustomLink>
                     <CustomLink to="/acknowledgement">Acknowledgement</CustomLink>
+                    <CustomLink to="/contacts">Contacts</CustomLink>
                 </Nav>
             </Container>
         </Navbar>

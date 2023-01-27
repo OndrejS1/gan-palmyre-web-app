@@ -1,5 +1,7 @@
 {
-  "name": "my-app",
+  "name": "palmyre-gan-pef-czu",
+  "homepage": "http://ml-research.science.pef.czu.cz",
+  "author": "Ondřej Svojše",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

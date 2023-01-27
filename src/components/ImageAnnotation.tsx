@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {useCanvas} from "../context/CanvasContext";
 import {Col} from "react-bootstrap";
 
