@@ -4,7 +4,7 @@ import {SavedResult, useResultTable} from "../context/ResultTableContext";
 
 export const SavedTranscriptTable: React.FunctionComponent<TableProps> = () => {
 
-    const { savedResults, setSavedResult, reload } = useResultTable()
+    const { savedResults, setSavedResult, reload, palmyreUnicodeMap } = useResultTable()
 
     useEffect(() => {
         loadTable();
@@ -24,15 +24,21 @@ export const SavedTranscriptTable: React.FunctionComponent<TableProps> = () => {
 
         return <tbody>
         { savedResults.map((prediction: SavedResult, index: number) => {
+
             return (
                 <>
                     <tr key={index}>
                         <td key={index+1}>{index+1}</td>
-                        <td key={index+1}>
+                        <td key={prediction.palmyreLetter+2}>
                             <img width={100} height={100} src={prediction.savedImg}  alt={"Image sample"}/>
                         </td>
-                        <td key={index+2}>{prediction.palmyreLetter}</td>
-                        <td key={index+3}>{prediction.probability}</td>
+                        <td key={prediction.palmyreLetter+1} style={{fontSize: "100px"}}>
+                            {
+                                palmyreUnicodeMap[prediction.palmyreLetter]
+                            }
+                        </td>
+                        <td key={prediction.palmyreLetter+3}>{prediction.palmyreLetter}</td>
+                        <td key={prediction.palmyreLetter+4}>{prediction.probability}</td>
                         <td>
                             <Button variant="outline-danger" onClick={() => removeSelectedResult(index)}>Remove</Button>
                         </td>
@@ -49,6 +55,7 @@ export const SavedTranscriptTable: React.FunctionComponent<TableProps> = () => {
             <tr>
                 <th>#</th>
                 <th>Image Sample</th>
+                <th>Transcript</th>
                 <th>Palmyre letter</th>
                 <th>Probability</th>
                 <th>Action</th>

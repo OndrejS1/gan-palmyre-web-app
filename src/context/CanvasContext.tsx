@@ -293,10 +293,8 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
                 clearCanvas,
                 draw,
                 loadImage,
-                setHandwritten,
-                cutSquareFromImage
-            }}
-        >
+                setHandwritten
+            }}>
             {children}
         </CanvasContext.Provider>
     );

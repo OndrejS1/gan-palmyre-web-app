@@ -4,7 +4,7 @@ import {PredictionResponse, useResultTable} from "../context/ResultTableContext"
 
 export const ResultTable: React.FunctionComponent<TableProps> = () => {
 
-    const {predictionResult, savedResults, setSavedResult, lastEvaluatedImage} = useResultTable()
+    const {predictionResult, palmyreUnicodeMap} = useResultTable()
 
     useEffect(() => {
         loadTable();
@@ -25,6 +25,7 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
                         <>
                             <tr key={index} id={"row" + index+1}>
                                 <td key={index+1}>{index+1}</td>
+                                <td key={prediction.class+1} style={{fontSize: "32px"}}>{palmyreUnicodeMap[prediction.class]}</td>
                                 <td key={prediction.class}>{prediction.class}</td>
                                 <td key={prediction.probability}>{prediction.probability}</td>
                                 <td key={index+100}><input type="radio" key={index} id={"inputchoice"+index} name="radio1" onClick={() => saveResult()}/></td>
@@ -40,6 +41,7 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Transcript</th>
                     <th>Palmyre letter</th>
                     <th>Probability</th>
                     <th>Choice</th>
