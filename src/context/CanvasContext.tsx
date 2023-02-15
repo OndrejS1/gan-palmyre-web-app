@@ -293,6 +293,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
                 clearCanvas,
                 draw,
                 loadImage,
+                cutSquareFromImage,
                 setHandwritten
             }}>
             {children}
