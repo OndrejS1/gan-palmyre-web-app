@@ -37,6 +37,10 @@ nav > div > div > li {
   transition: background .2s ease-in-out, border .2s ease-in-out;
 }
 
+body {
+  font-family: "Noto Sans Palmyrene", sans-serif;
+}
+
 .drop-container:hover {
   background: #eee;
   border-color: #111;

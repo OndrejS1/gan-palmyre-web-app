@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../resources/styles/App.css';
 
 import Home from "./Home";
@@ -7,10 +7,20 @@ import NavbarMenu from "../components/NavbarMenu";
 import About from "./About";
 import Acknowledgement from "./Acknowledgement";
 import Contacts from "./Contacts";
+import WebFont from 'webfontloader';
 
 function App() {
 
-  return (
+    useEffect(() => {
+        WebFont.load({
+            google: {
+                families: ['Noto+Sans+Palmyrene:400,700&display=swap']
+            }
+        });
+    }, []);
+
+
+    return (
     <>
         <NavbarMenu />
         <div className="container" style={{backgroundColor: '#161617'}}>
