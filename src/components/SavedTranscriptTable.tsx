@@ -32,7 +32,7 @@ export const SavedTranscriptTable: React.FunctionComponent<TableProps> = () => {
                         <td key={prediction.palmyreLetter+2}>
                             <img width={100} height={100} src={prediction.savedImg}  alt={"Image sample"}/>
                         </td>
-                        <td key={prediction.palmyreLetter+1} style={{fontSize: "100px"}}>
+                        <td key={prediction.palmyreLetter+1} style={{fontSize: "100px", fontFamily: "Noto Sans Palmyrene"}}>
                             {
                                 palmyreUnicodeMap[prediction.palmyreLetter]
                             }
