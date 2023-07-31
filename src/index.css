@@ -68,3 +68,9 @@ body {
 h1, h2 {
   color: #FFFFFF;
 }
+
+#imageBox {
+  width: 100vw;
+  height: 100vh;
+  position: relative; /* if the canvas is positioned absolutely */
+}

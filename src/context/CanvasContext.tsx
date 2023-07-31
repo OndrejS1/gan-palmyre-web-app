@@ -201,16 +201,23 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
 
     /* Set up canvas */
     const prepareCanvas = () => {
-        const canvas = canvasRef.current
-        canvas.width = 500 * 2;
-        canvas.height = 500 * 2;
+        const canvas = canvasRef.current;
+        const dpr = window.devicePixelRatio || 1;
 
-        canvas.style.width = `500px`;
-        canvas.style.height = `500px`;
+        function resizeCanvas() {
+            // take the minimum of window's height and width to ensure a square canvas
+            const size = Math.min(window.innerWidth, window.innerHeight) - 200;
+            canvas.width = size * dpr;
+            canvas.height = size * dpr;
+            canvas.style.width = `${size}px`;
+            canvas.style.height = `${size}px`;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); // initial resize
 
         const context = canvas.getContext("2d")
-
-        context.scale(2, 2);
+        context.scale(dpr, dpr);
         context.lineCap = "round";
         context.strokeStyle = "black";
         context.lineWidth = 15;
@@ -218,8 +225,16 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         const image = new Image();
         image.src = placeholderImage;
         image.onload = () => {
-            context.drawImage(image, 0, 0, 500, 500);
+            context.drawImage(image, 0, 0, canvas.width / dpr, canvas.height / dpr);
         };
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mouseup', finishDrawing);
+        canvas.addEventListener('mousemove', draw);
+
+        canvas.addEventListener('touchend', finishDrawing);
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', draw);
 
         contextRef.current = context;
     };
@@ -248,20 +263,26 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
 
     /* Handwriting on canvas */
     // @ts-ignore
-    const startDrawing = ({ nativeEvent }) => {
-        const { offsetX, offsetY } = nativeEvent;
-        contextRef.current.beginPath();
-        contextRef.current.moveTo(offsetX, offsetY);
-
-        setIsDrawing(true);
+    const getPosition = (event) => {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const x = (event.clientX - rect.left);
+        const y = (event.clientY - rect.top);
+        return { offsetX: x, offsetY: y };
     };
 
+    const startDrawing = (event:any) => {
+        event.preventDefault();
+        const { offsetX, offsetY } = getPosition(event.touches ? event.touches[0] : event);
+        contextRef.current.beginPath();
+        contextRef.current.moveTo(offsetX, offsetY);
+        setIsDrawing(true);
+    };
     const finishDrawing = (): void => {
         contextRef.current.closePath();
         setIsDrawing(false);
     };
 
-    const draw = ({ nativeEvent }: any) => {
+    const draw = (event: any) => {
         if(count > 0 && count < 2) {
             clearPlaceholder();
         }
@@ -269,8 +290,9 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         if (!isDrawing) {
             return;
         }
-        setCount(count+1)
-        const { offsetX, offsetY } = nativeEvent;
+        event.preventDefault();
+        setCount(count+1);
+        const { offsetX, offsetY } = getPosition(event.touches ? event.touches[0] : event);
         contextRef.current.lineTo(offsetX, offsetY);
         contextRef.current.stroke();
     };
