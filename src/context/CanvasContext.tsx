@@ -111,7 +111,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
     async function cutSquareFromImage(): Promise<string>  {
           return await convertURIToImageData(canvas.toDataURL()).then(res =>
             {
-                return getRedSquare(res)
+                return getRedSquare()
             });
 
        // setAnnotationResult(result);
@@ -130,7 +130,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         });
     }
 
-    function getRedSquare(imageData: ImageData): string {
+    function getRedSquare(): string {
         // Extract the area inside the red square
         const newCanvas = document.createElement('canvas');
         newCanvas.width = 100;

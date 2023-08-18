@@ -50,6 +50,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         "sadhe":"\uD802\uDC72",
         "qoph":"\uD802\uDC73",
         "resh":"\uD802\uDC74",
+        "resh-daleth":"\uD802\uDC74",
         "shin":"\uD802\uDC75",
         "taw":"\uD802\uDC76",
         "left":"\uD802\uDC77",
@@ -60,7 +61,8 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         "4":"\uD802\uDC7C",
         "5":"\uD802\uDC7D",
         "10":"\uD802\uDC7E",
-        "20":"\uD802\uDC7F"
+        "20":"\uD802\uDC7F",
+        "100":"\uD802\uDC7E"
     };
     const handleEvaluateClick = (isHandwritten: boolean) => {
 
@@ -121,7 +123,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         const resultClass = table.rows[rowNumber].cells[2].innerText;
         // @ts-ignore
         const resultProbability = table.rows[rowNumber].cells[3].innerText;
-        savedResults.push({"palmyreLetter":resultClass, "probability":resultProbability, "savedImg":lastEvaluatedImage})
+        savedResults.push({"palmyreLetter": resultClass, "probability": resultProbability, "savedImg": lastEvaluatedImage})
         setSavedResult(savedResults);
         setReload(!reload);
         setPredictionResult([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}])
