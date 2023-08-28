@@ -106,7 +106,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         setLastEvaluatedImage(canvasData);
 
         return fetch(
-            'http://127.0.0.1:5000/predict-handwritten',
+            'https://ml-research.pef.czu.cz/api/predict-handwritten',
             {
                 method: 'post',
                 body: formData
