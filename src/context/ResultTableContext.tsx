@@ -60,6 +60,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         "4":"\uD802\uDC7C",
         "5":"\uD802\uDC7D",
         "10":"\uD802\uDC7E",
+        "100":"\uD802\uDC7E",
         "20":"\uD802\uDC7F"
     };
     const handleEvaluateClick = (isHandwritten: boolean) => {
@@ -105,7 +106,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         setLastEvaluatedImage(canvasData);
 
         return fetch(
-            'https://ml-research.pef.czu.cz/api/predict-handwritten',
+            'http://127.0.0.1:5000/predict-handwritten',
             {
                 method: 'post',
                 body: formData
