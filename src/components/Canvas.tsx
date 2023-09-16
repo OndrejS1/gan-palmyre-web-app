@@ -18,6 +18,7 @@ export function Canvas() {
     return (
         <Col>
             <canvas
+
                 onMouseDown={startDrawing}
                 onMouseUp={finishDrawing}
                 onMouseMove={draw}

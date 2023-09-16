@@ -14,10 +14,14 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
     const [handwritten, setHandwritten] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+    const hiddenCanvasRef = useRef<HTMLCanvasElement | null>(null);
+    const hiddenContextRef = useRef<CanvasRenderingContext2D | null>(null);
+
 
     let square:any = {};
     const annotation:any = {};
-    let canvas:any, context:any, image: HTMLImageElement;
+    let canvas:any, context:any, hiddenCanvas:any, hiddenContext:any, image: HTMLImageElement;
+
 
     const startAnnotation = (e: MouseEvent | TouchEvent) => {
         e.preventDefault();
@@ -33,15 +37,16 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
             }
         } else {
             // @ts-ignore
-            annotation.startX = e.clientX - canvas.offsetLeft;
+            annotation.startX = e.clientX - canvas.offsetLeft + window.scrollX;
             // @ts-ignore
-            annotation.startY = e.clientY - canvas.offsetTop;
+            annotation.startY = e.clientY - canvas.offsetTop + window.scrollY;
             canvas.addEventListener("mousemove", drawAnnotation);
         }
     };
 
     const drawAnnotation = (e: MouseEvent | TouchEvent) => {
         context.strokeStyle = "red";
+        context.lineWidth = 1;
 
         // @ts-ignore
         context.clearRect(0, 0, image, canvas.width, canvas.height);
@@ -55,9 +60,9 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
             annotation.endY = e.touches[0].clientY - canvas.offsetTop;
         } else {
             // @ts-ignore
-            annotation.endX = e.clientX - canvas.offsetLeft;
+            annotation.endX = e.clientX - canvas.offsetLeft + window.scrollX;
             // @ts-ignore
-            annotation.endY = e.clientY - canvas.offsetTop;
+            annotation.endY = e.clientY - canvas.offsetTop + window.scrollY;
         }
 
         // @ts-ignore
@@ -109,34 +114,50 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
     };
 
     async function cutSquareFromImage(): Promise<string>  {
-          return await convertURIToImageData(canvas.toDataURL()).then(res =>
+        const hiddenCanvas = hiddenCanvasRef.current;
+
+        return await convertURIToImageData(hiddenCanvas.toDataURL()).then(() =>
             {
-                return getRedSquare(res)
+                return getRedSquare();
             });
 
        // setAnnotationResult(result);
     }
 
     function convertURIToImageData(URI: any): Promise<ImageData> {
-        return new Promise(function(resolve, reject) {
-            if (URI == null) return reject();
-            image.addEventListener('load', function() {
-                canvas.width = image.width;
-                canvas.height = image.height;
-                context.drawImage(image, 0, 0, canvas.width, canvas.height);
-                resolve(context.getImageData(0, 0, canvas.width, canvas.height));
-            }, false);
-            image.src = URI;
+        return new Promise((resolve, reject) => {
+            if (!URI) {
+                reject(new Error("No URI provided"));
+                return;
+            }
+
+            const img = new Image();
+            const cvs = document.createElement('canvas');
+            const ctx = cvs.getContext('2d');
+
+            img.onload = () => {
+                cvs.width = img.width;
+                cvs.height = img.height;
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+                resolve(ctx.getImageData(0, 0, img.width, img.height));
+                img.removeEventListener('load', img.onload);
+            };
+
+            img.onerror = () => {
+                reject(new Error("Failed to load image from URI"));
+            };
+
+            img.src = URI;
         });
     }
 
-    function getRedSquare(imageData: ImageData): string {
+    function getRedSquare(): string {
         // Extract the area inside the red square
         const newCanvas = document.createElement('canvas');
         newCanvas.width = 100;
         newCanvas.height = 100;
         const newCtx = newCanvas.getContext('2d');
-        newCtx.drawImage(canvas, square.x, square.y, square.size, square.size, 0, 0, 100, 100);
+        newCtx.drawImage(canvas, square.x + 5, square.y + 5, square.size - 7, square.size - 7, 0, 0, 100, 100);
 
         // Get the new data URL
         // Return the new data URL
@@ -163,6 +184,14 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
             // Get the canvas context
             context = canvas.getContext("2d");
             context.drawImage(image, 0, 0, image.width, image.height);
+
+
+            // Draw the image on the hidden canvas
+            const hiddenCanvas = hiddenCanvasRef.current;
+            const hiddenContext = hiddenCanvas.getContext("2d");
+            hiddenCanvas.width = image.width;
+            hiddenCanvas.height = image.height;
+            hiddenContext.drawImage(image, 0, 0, image.width, image.height);
 
             if(isMobile) {
                 // @ts-ignore
@@ -286,6 +315,8 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
             value={{
                 canvasRef,
                 contextRef,
+                hiddenCanvasRef,
+                hiddenContextRef,
                 handwritten,
                 prepareCanvas,
                 startDrawing,

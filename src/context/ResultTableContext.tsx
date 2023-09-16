@@ -88,7 +88,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         formData.append('imageBase64', annotationResult);
 
         return fetch(
-            'https://ml-research.pef.czu.cz/api/predict',
+            'http://127.0.0.1:5000/predict',
             {
                 method: 'post',
                 body: formData
@@ -106,7 +106,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         setLastEvaluatedImage(canvasData);
 
         return fetch(
-            'https://ml-research.pef.czu.cz/api/predict-handwritten',
+            'http://127.0.0.1:5000/predict-handwritten',
             {
                 method: 'post',
                 body: formData

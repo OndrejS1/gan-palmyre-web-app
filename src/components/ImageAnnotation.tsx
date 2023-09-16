@@ -3,9 +3,12 @@ import {useCanvas} from "../context/CanvasContext";
 import {Col} from "react-bootstrap";
 
 const ImageAnnotation = () => {
+    console.log("ImageAnnotation rendered");
+
     const {
         loadImage,
-        reload
+        hiddenCanvasRef,
+        reload,
     } = useCanvas();
 
     const [, updateState] = React.useState();
@@ -21,6 +24,8 @@ const ImageAnnotation = () => {
                 </label>
             </div>
             <canvas id="canvas"></canvas>
+            <canvas ref={hiddenCanvasRef}
+                    style={{ display: 'none' }}></canvas>
        </Col>
     );
 };

@@ -19,21 +19,26 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
             return;
         }
 
-        return <tbody id={"result-table-body"}>
-                { predictionResult.map((prediction: PredictionResponse, index: number) => {
-                    return (
-                        <>
-                            <tr key={index} id={"row" + index+1}>
-                                <td key={index+1}>{index+1}</td>
-                                <td key={prediction.class+1} style={{fontSize: "32px", fontFamily: "Noto Sans Palmyrene"}}>{palmyreUnicodeMap[prediction.class]}</td>
-                                <td key={prediction.class}>{prediction.class}</td>
-                                <td key={prediction.probability}>{prediction.probability}</td>
-                                <td key={index+100}><input type="radio" key={index} id={"inputchoice"+index} name="radio1" onClick={() => saveResult()}/></td>
-                            </tr>
-                        </>
-                    );
-                })}
-            </tbody>
+        return <tbody id="result-table-body">
+            {predictionResult.map((prediction: PredictionResponse, index: number) => (
+                <tr key={"row" + index}>
+                    <td>{index + 1}</td>
+                    <td style={{ fontSize: "32px", fontFamily: "Noto Sans Palmyrene" }}>
+                        {palmyreUnicodeMap[prediction.class]}
+                    </td>
+                    <td>{prediction.class}</td>
+                    <td>{prediction.probability}</td>
+                    <td>
+                        <input
+                            type="radio"
+                            id={"inputchoice" + index}
+                            name="radio1"
+                            onClick={() => saveResult()}
+                        />
+                    </td>
+                </tr>
+        ))}
+        </tbody>
     }
 
     return (
