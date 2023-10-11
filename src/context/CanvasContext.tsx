@@ -20,7 +20,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
 
     let square:any = {};
     const annotation:any = {};
-    let canvas:any, context:any, hiddenCanvas:any, hiddenContext:any, image: HTMLImageElement;
+    let canvas:any, context:any, image: HTMLImageElement;
 
 
     const startAnnotation = (e: MouseEvent | TouchEvent) => {
@@ -242,7 +242,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         context.scale(2, 2);
         context.lineCap = "round";
         context.strokeStyle = "black";
-        context.lineWidth = 15;
+        context.lineWidth = 7;
 
         const image = new Image();
         image.src = placeholderImage;
