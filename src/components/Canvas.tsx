@@ -16,9 +16,8 @@ export function Canvas() {
     }, []);
 
     return (
-        <Col>
+        <Col style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <canvas
-
                 onMouseDown={startDrawing}
                 onMouseUp={finishDrawing}
                 onMouseMove={draw}

@@ -231,11 +231,15 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
     /* Set up canvas */
     const prepareCanvas = () => {
         const canvas = canvasRef.current
-        canvas.width = 500 * 2;
-        canvas.height = 500 * 2;
 
-        canvas.style.width = `500px`;
-        canvas.style.height = `500px`;
+        const newWidth = 200;
+        const newHeight = 200;
+
+        canvas.width = newWidth * 2;
+        canvas.height = newHeight * 2;
+
+        canvas.style.width = `${newWidth}px`;
+        canvas.style.height = `${newHeight}px`;
 
         const context = canvas.getContext("2d")
 
@@ -247,7 +251,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         const image = new Image();
         image.src = placeholderImage;
         image.onload = () => {
-            context.drawImage(image, 0, 0, 500, 500);
+            context.drawImage(image, 0, 0, newWidth, newHeight);
         };
 
         contextRef.current = context;
