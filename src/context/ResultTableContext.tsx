@@ -50,6 +50,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         "sadhe":"\uD802\uDC72",
         "qoph":"\uD802\uDC73",
         "resh":"\uD802\uDC74",
+        "resh-daleth":"\uD802\uDC74",
         "shin":"\uD802\uDC75",
         "taw":"\uD802\uDC76",
         "left":"\uD802\uDC77",

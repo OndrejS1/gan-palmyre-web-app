@@ -1,5 +1,5 @@
 import React, {FC, ReactNode, useContext, useRef, useState} from "react";
-import placeholderImage from '../resources/image/placeholder-palmyre.png';
+import placeholderImage from '../resources/image/placeholder-palmyre-2.png';
 import {isMobile} from 'react-device-detect';
 
 const CanvasContext = React.createContext(null);

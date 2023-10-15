@@ -10,6 +10,7 @@ import {SavedTranscriptTable} from "../components/SavedTranscriptTable";
 import ImageAnnotation from "../components/ImageAnnotation";
 import './../resources/styles/ToggleButton.css';
 import {useCanvas} from "../context/CanvasContext";
+import BlueContainerWithTooltip from "../components/BlueContainerWithTooltip";
 
 function Home() {
 
@@ -24,7 +25,10 @@ function Home() {
     return (
         <Container className="mt-5" style={{backgroundColor: '#161617'}}>
             <Row>
-                <Col><h1 className="mb-5" style={{color: '#FFFFFF'}}>Palmyre Translation Tool</h1></Col>
+                <Col>
+                    <h1 className="mb-5" style={{color: '#FFFFFF'}}>Palmyre Translation Tool</h1>
+                    <BlueContainerWithTooltip isHandwritten={isHandwritten}/>
+                </Col>
 
                 <Col>
                     <Button className={`toggle-button ${isHandwritten ? 'active' : ''}`} onClick={handleToggle}>
