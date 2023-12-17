@@ -1,6 +1,8 @@
 import React, {FC, ReactNode, useContext, useRef, useState} from "react";
 import placeholderImage from '../resources/image/placeholder-palmyre-2.png';
 import {isMobile} from 'react-device-detect';
+import {options, OptionValues} from "../constants/ButtonOptions";
+import {SegmentationResponse} from "./ResultTableContext";
 
 const CanvasContext = React.createContext(null);
 
@@ -11,12 +13,14 @@ interface Props {
 export const CanvasProvider: FC<Props> = ({ children }): any => {
     const [isDrawing, setIsDrawing] = useState(false);
     const [count, setCount] = useState(0);
-    const [handwritten, setHandwritten] = useState(false);
+    const [augmentedImage, setAugmentedImage] = useState<string>(null);
+    const [selectedOption, setSelectedOption] = useState<OptionValues>(options.HANDWRITTEN);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const contextRef = useRef<CanvasRenderingContext2D | null>(null);
     const hiddenCanvasRef = useRef<HTMLCanvasElement | null>(null);
     const hiddenContextRef = useRef<CanvasRenderingContext2D | null>(null);
-
+    const [isLoading, setIsLoading] = useState(false);
+    const [segmentationResult, setSegmentationResult] = useState<SegmentationResponse>(null)
 
     let square:any = {};
     const annotation:any = {};
@@ -121,7 +125,6 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
                 return getRedSquare();
             });
 
-       // setAnnotationResult(result);
     }
 
     function convertURIToImageData(URI: any): Promise<ImageData> {
@@ -258,7 +261,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
     };
 
     const clearCanvas = () => {
-        if(!handwritten) {
+        if(selectedOption !== options.HANDWRITTEN) {
             const cvs = document.getElementById("canvas");
             const uploadWindow = document.getElementById("fileUploadField");
 
@@ -314,6 +317,36 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height)
     }
 
+    const loadAugmentedImage = () => {
+
+        const fileInput = document.getElementById("fileAugmentedInput");
+        const uploadWindow = document.getElementById("fileAugmentedInput");
+        uploadWindow.style.height = "0";
+        uploadWindow.style.visibility = "hidden";
+
+        image = new Image();
+        // @ts-ignore
+
+        image.src = URL.createObjectURL(fileInput.files[0]);
+        image.onload = function() {
+            scaleImage(image, 650, 650);
+            setAugmentedImage(convertImageToImageData(image));
+        };
+    }
+    function convertImageToImageData(imageElement: HTMLImageElement) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = imageElement.naturalWidth;
+        canvas.height = imageElement.naturalHeight;
+
+        ctx.drawImage(imageElement, 0, 0);
+
+
+        ctx.getImageData(0, 0, canvas.width, canvas.height);
+        return canvas.toDataURL('image/png');
+    }
+
     return (
         <CanvasContext.Provider
             value={{
@@ -321,15 +354,21 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
                 contextRef,
                 hiddenCanvasRef,
                 hiddenContextRef,
-                handwritten,
+                selectedOption,
                 prepareCanvas,
                 startDrawing,
                 finishDrawing,
                 clearCanvas,
                 draw,
                 loadImage,
+                loadAugmentedImage,
                 cutSquareFromImage,
-                setHandwritten
+                setSelectedOption,
+                augmentedImage,
+                isLoading,
+                setIsLoading,
+                segmentationResult,
+                setSegmentationResult
             }}>
             {children}
         </CanvasContext.Provider>

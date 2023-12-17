@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Alert, Container } from 'react-bootstrap';
 import data from '../resources/data.json';
+import {OptionValues, options} from "../constants/ButtonOptions";
 
 type ModalProps = {
-    isHandwritten: boolean;
+    option: OptionValues;
 };
 
-const BlueContainerWithTooltip: React.FC<ModalProps> = ({ isHandwritten }) => {
+const BlueContainerWithTooltip: React.FC<ModalProps> = ({ option }) => {
     const [showAlert, setShowAlert] = useState(true);
 
     const handleCloseAlert = () => setShowAlert(false);
@@ -16,7 +17,9 @@ const BlueContainerWithTooltip: React.FC<ModalProps> = ({ isHandwritten }) => {
             {showAlert && (
                 <Alert variant="info" onClose={handleCloseAlert} dismissible>
                     <Container>
-                        { isHandwritten ? data["handwritten-tooltip"] : data["photo-annotation-tooltip"]}
+                        { option === options.HANDWRITTEN && data["handwritten-tooltip"] }
+                        { option === options.IMAGE_ANNOTATION && data["photo-annotation-tooltip"] }
+                        { option === options.IMAGE_AUGMENTATION && data["augmented-transcript"] }
                     </Container>
                 </Alert>
             )}

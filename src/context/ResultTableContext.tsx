@@ -1,6 +1,7 @@
 import React, {FC, ReactNode, useContext, useState} from "react";
 import {resizeCanvas} from "../utils/CanvasResizer";
 import {useCanvas} from "./CanvasContext";
+import {OptionValues, options} from "../constants/ButtonOptions";
 
 
 const ResultTableContext = React.createContext(null);
@@ -21,9 +22,14 @@ export type SavedResult = {
     savedImg: string
 }
 
+export type SegmentationResponse = {
+    image: string,
+    transcript: Array<Array<string>>
+}
+
 export const ResultTableProvider: FC<Props> = ({ children }): any => {
 
-    const { canvasRef, cutSquareFromImage } = useCanvas();
+    const { canvasRef, cutSquareFromImage, augmentedImage, setIsLoading, setSegmentationResult,segmentationResult  } = useCanvas();
     const [predictionResult, setPredictionResult] = useState<Array<PredictionResponse>>([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}]);
     const [savedResults, setSavedResult] = useState<Array<SavedResult>>([]);
     const [lastEvaluatedImage, setLastEvaluatedImage] = useState(null);
@@ -64,15 +70,33 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         "100":"\uD802\uDC7E",
         "20":"\uD802\uDC7F"
     };
-    const handleEvaluateClick = (isHandwritten: boolean) => {
+    const handleEvaluateClick = (selectionOption: OptionValues) => {
 
-        if (isHandwritten) {
-            evaluateHandwrittenCanvasSnapshot()
-                .then(result => {
-                    setPredictionResult(result)
-                });
-        } else {
-            handleEvaluateAnnotationClick();
+        setIsLoading(true);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 10000);
+
+        switch (selectionOption) {
+            case options.IMAGE_AUGMENTATION:
+                handleAugmentedTranscriptClick().then(result => {
+                    setSegmentationResult(result);
+                    setIsLoading(false);
+                })
+                break;
+            case options.HANDWRITTEN:
+                handleEvaluateAnnotationClick()
+                setIsLoading(false);
+                break;
+            case options.IMAGE_ANNOTATION:
+                evaluateHandwrittenCanvasSnapshot()
+                    .then(result => {
+                        setPredictionResult(result)
+                        setIsLoading(false);
+                    });
+                break;
+            default:
+                console.log('Invalid action!');
         }
     }
 
@@ -84,6 +108,19 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
             }))
     }
 
+    const handleAugmentedTranscriptClick = () => {
+
+        const formData = new FormData();
+        formData.append('imageBase64', augmentedImage);
+
+        return fetch(
+            'http://127.0.0.1:5000/convert-augmented',
+            {
+                method: 'post',
+                body: formData
+            }).then(response => response.json());
+
+    }
     const evaluateAnnotationCanvasSnapshot = async (annotationResult: string) => {
         const formData = new FormData();
         formData.append('imageBase64', annotationResult);
@@ -141,7 +178,8 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
                 lastEvaluatedImage,
                 setSavedResult,
                 reload,
-                palmyreUnicodeMap
+                palmyreUnicodeMap,
+                segmentationResult
             }}>
             {children}
         </ResultTableContext.Provider>

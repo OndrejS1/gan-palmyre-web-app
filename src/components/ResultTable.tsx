@@ -10,10 +10,6 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
         loadTable();
     }, [predictionResult]);
 
-    const saveResult = () => {
-
-    }
-
     function loadTable(): ReactElement {
         if(predictionResult === undefined) {
             return;
@@ -33,7 +29,6 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
                             type="radio"
                             id={"inputchoice" + index}
                             name="radio1"
-                            onClick={() => saveResult()}
                         />
                     </td>
                 </tr>

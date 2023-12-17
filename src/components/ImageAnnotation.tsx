@@ -3,7 +3,6 @@ import {useCanvas} from "../context/CanvasContext";
 import {Col} from "react-bootstrap";
 
 const ImageAnnotation = () => {
-    console.log("ImageAnnotation rendered");
 
     const {
         loadImage,
