@@ -75,7 +75,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
-        }, 10000);
+        }, 150000);
 
         switch (selectionOption) {
             case options.IMAGE_AUGMENTATION:
@@ -84,11 +84,11 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
                     setIsLoading(false);
                 })
                 break;
-            case options.HANDWRITTEN:
+            case options.IMAGE_ANNOTATION:
                 handleEvaluateAnnotationClick()
                 setIsLoading(false);
                 break;
-            case options.IMAGE_ANNOTATION:
+            case options.HANDWRITTEN:
                 evaluateHandwrittenCanvasSnapshot()
                     .then(result => {
                         setPredictionResult(result)
@@ -108,17 +108,18 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
             }))
     }
 
-    const handleAugmentedTranscriptClick = () => {
+    const handleAugmentedTranscriptClick = async () => {
 
         const formData = new FormData();
         formData.append('imageBase64', augmentedImage);
 
-        return fetch(
-            'http://127.0.0.1:5000/convert-augmented',
+        const response = await fetch(
+            'https://ml-research.pef.czu.cz/api/convert-augmented',
             {
                 method: 'post',
                 body: formData
-            }).then(response => response.json());
+            });
+        return await response.json();
 
     }
     const evaluateAnnotationCanvasSnapshot = async (annotationResult: string) => {
@@ -151,20 +152,28 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
             }).then(response => response.json());
     }
 
-    const handleSaveClick = () => {
-        const table = document.getElementById('result-table-body');
-        // @ts-ignore
-        let inputChoiceId = Array.from(document.getElementsByName("radio1")).find(r => r.checked).id;
-        let rowNumber = inputChoiceId.charAt(inputChoiceId.length - 1);
-        // @ts-ignore
-        const resultClass = table.rows[rowNumber].cells[2].innerText;
-        // @ts-ignore
-        const resultProbability = table.rows[rowNumber].cells[3].innerText;
-        savedResults.push({"palmyreLetter":resultClass, "probability":resultProbability, "savedImg":lastEvaluatedImage})
-        setSavedResult(savedResults);
-        setReload(!reload);
-        setPredictionResult([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}])
-
+    const handleSaveClick = (selectionOption: OptionValues) => {
+        switch (selectionOption) {
+            case options.HANDWRITTEN || options.IMAGE_ANNOTATION:
+                const table = document.getElementById('result-table-body');
+                // @ts-ignore
+                let inputChoiceId = Array.from(document.getElementsByName("radio1")).find(r => r.checked).id;
+                let rowNumber = inputChoiceId.charAt(inputChoiceId.length - 1);
+                // @ts-ignore
+                const resultClass = table.rows[rowNumber].cells[2].innerText;
+                // @ts-ignore
+                const resultProbability = table.rows[rowNumber].cells[3].innerText;
+                savedResults.push({"palmyreLetter":resultClass, "probability":resultProbability, "savedImg":lastEvaluatedImage})
+                setSavedResult(savedResults);
+                setReload(!reload);
+                setPredictionResult([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}])
+                break;
+            case options.IMAGE_AUGMENTATION:
+                alert("Have not been implemented yet!");
+                break;
+            default:
+                alert("Unsupported option!");
+        }
     }
 
     return (

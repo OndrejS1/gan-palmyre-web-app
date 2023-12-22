@@ -19,6 +19,6 @@ export const SegmentationImageResult: React.FC = () => {
 
 const ImageSegment: React.FC<SegmentationResponse> = ({ image , transcript}) => {
     return (
-            <img src={image} alt="Segmentation" style={{height: 800, width: 600}} />
+            <img src={image} alt="Segmentation" style={{height: 700, width: 600}} />
     );
 };

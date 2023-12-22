@@ -22,7 +22,7 @@ const ImageAnnotation = () => {
                     <input type="file" id="fileInput" accept="image/*" onChange={loadImage} />
                 </label>
             </div>
-            <canvas id="canvas"></canvas>
+            <canvas className={"mt-3"} id="canvas"></canvas>
             <canvas ref={hiddenCanvasRef}
                     style={{ display: 'none' }}></canvas>
        </Col>

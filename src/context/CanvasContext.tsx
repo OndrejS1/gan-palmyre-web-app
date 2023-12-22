@@ -3,6 +3,7 @@ import placeholderImage from '../resources/image/placeholder-palmyre-2.png';
 import {isMobile} from 'react-device-detect';
 import {options, OptionValues} from "../constants/ButtonOptions";
 import {SegmentationResponse} from "./ResultTableContext";
+import {scaleImage} from "./MathFunctions";
 
 const CanvasContext = React.createContext(null);
 
@@ -119,6 +120,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
 
     async function cutSquareFromImage(): Promise<string>  {
         const hiddenCanvas = hiddenCanvasRef.current;
+        console.log(hiddenCanvas)
 
         return await convertURIToImageData(hiddenCanvas.toDataURL()).then(() =>
             {
@@ -210,27 +212,6 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
             };
     }
 
-    function scaleImage(image:any, maxWidth:any, maxHeight:any) {
-        // Get the original aspect ratio of the image
-        const aspectRatio = image.width / image.height;
-
-        // Calculate the new width and height
-        let newWidth = image.width;
-        let newHeight = image.height;
-        if (newWidth > maxWidth) {
-            newWidth = maxWidth;
-            newHeight = newWidth / aspectRatio;
-        }
-        if (newHeight > maxHeight) {
-            newHeight = maxHeight;
-            newWidth = newHeight * aspectRatio;
-        }
-
-        // Scale the image
-        image.width = newWidth;
-        image.height = newHeight;
-    }
-
     /* Set up canvas */
     const prepareCanvas = () => {
         const canvas = canvasRef.current
@@ -261,26 +242,64 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
     };
 
     const clearCanvas = () => {
-        if(selectedOption !== options.HANDWRITTEN) {
-            const cvs = document.getElementById("canvas");
-            const uploadWindow = document.getElementById("fileUploadField");
 
-            if(cvs != null) {
-                document.getElementById("canvas").remove();
-                uploadWindow.style.height = "200";
-                uploadWindow.style.visibility = "visible";
-
-                const canv = document.createElement('canvas');
-                canv.id = 'canvas';
-
-                document.body.appendChild(canv); // adds the canvas to the body element
-                document.getElementById('imageBox').appendChild(canv); // adds the canvas to #someBox
-            }
-        } else {
-            prepareCanvas();
-            setCount(0);
+        switch (selectedOption) {
+            case options.IMAGE_AUGMENTATION:
+                clearSegmentation();
+                break;
+            case options.IMAGE_ANNOTATION:
+                clearImageAnnotation();
+                break;
+            case options.HANDWRITTEN:
+                clearHandwritten();
+                break;
+            default:
+                console.log('Invalid action!');
         }
     }
+
+    function clearImageAnnotation() {
+        const cvs = document.getElementById("canvas");
+        const uploadWindow = document.getElementById("fileUploadField");
+
+        if(cvs != null) {
+            document.getElementById("canvas").remove();
+            uploadWindow.style.height = "200";
+            uploadWindow.style.visibility = "visible";
+
+            const canv = document.createElement('canvas');
+            canv.id = 'canvas';
+
+            document.body.appendChild(canv);
+            document.getElementById('imageBox').appendChild(canv);
+        }
+    }
+
+    function clearHandwritten() {
+        prepareCanvas();
+        setCount(0);
+    }
+
+    function clearSegmentation() {
+
+        setSegmentationResult(null);
+        const cvs = document.getElementById("segmentation-hidden-canvas");
+        const uploadWindow = document.getElementById("fileAugmentedUploadField");
+
+        if(cvs != null) {
+            document.getElementById("segmentation-hidden-canvas").remove();
+            uploadWindow.style.height = "200";
+            uploadWindow.style.visibility = "visible";
+
+            const canv = document.createElement('canvas');
+            canv.id = 'segmentation-hidden-canvas';
+            canv.style.display = 'none';
+
+            document.getElementById('augmented-image-box').appendChild(canv); // adds the canvas to #someBox
+        }
+
+    }
+
 
     /* Handwriting on canvas */
     // @ts-ignore
@@ -320,9 +339,10 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
     const loadAugmentedImage = () => {
 
         const fileInput = document.getElementById("fileAugmentedInput");
-        const uploadWindow = document.getElementById("fileAugmentedInput");
+        const uploadWindow = document.getElementById("fileAugmentedUploadField");
         uploadWindow.style.height = "0";
         uploadWindow.style.visibility = "hidden";
+
 
         image = new Image();
         // @ts-ignore
@@ -331,7 +351,19 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         image.onload = function() {
             scaleImage(image, 650, 650);
             setAugmentedImage(convertImageToImageData(image));
+
+            canvas = document.getElementById("segmentation-hidden-canvas");
+            canvas.style.visibility = 'visible';
+            canvas.style.display = 'block';
+
+            canvas.width = image.width;
+            canvas.height = image.height;
+            // Get the canvas context
+            context = canvas.getContext("2d");
+            context.drawImage(image, 0, 0, image.width, image.height);
         };
+
+
     }
     function convertImageToImageData(imageElement: HTMLImageElement) {
         const canvas = document.createElement('canvas');
@@ -344,7 +376,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
 
 
         ctx.getImageData(0, 0, canvas.width, canvas.height);
-        return canvas.toDataURL('image/png');
+        return canvas.toDataURL();
     }
 
     return (

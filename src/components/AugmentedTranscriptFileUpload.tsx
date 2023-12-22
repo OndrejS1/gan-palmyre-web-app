@@ -15,8 +15,9 @@ const AugmentedTranscriptFileUpload = () => {
 
     return (
         <Col id={"augmented-image-box"}>
-            <div className={"center mt-5"} id="fileAugmentedUploadField">
-                <label htmlFor="images" className="drop-container">
+            <canvas id={'segmentation-hidden-canvas'} style={{ display: 'none' }}></canvas>
+            <div className="mt-5" id="fileAugmentedUploadField">
+                <label htmlFor="images" className="drop-container text-center">
                     <span className="drop-title">Drop files here</span>
                     <input type="file" id="fileAugmentedInput" accept="image/*" onChange={loadAugmentedImage} />
                 </label>

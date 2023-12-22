@@ -81,29 +81,28 @@ function Home() {
                     <Col>
                         {activeOption === options.HANDWRITTEN && <Canvas />}
                         {activeOption === options.IMAGE_ANNOTATION && <ImageAnnotation />}
-                        {
-                            activeOption === options.IMAGE_AUGMENTATION && segmentationResult !== null && <SegmentationImageResult />
-                        }
 
                         {activeOption === options.IMAGE_AUGMENTATION &&
                             <TranscriptResultsTable/>
                         }
 
                         {
-                            activeOption === options.IMAGE_AUGMENTATION && segmentationResult === null && <AugmentedTranscriptFileUpload />
+                            activeOption === options.IMAGE_AUGMENTATION && <AugmentedTranscriptFileUpload />
                         }
                     </Col>
                     <Col>
                         {activeOption !== options.IMAGE_AUGMENTATION &&
-                            <Table id={'resultTable'}>
+                            <Table id={'resultTable'} className={'mt-5'}>
                                 <ResultTable/>
                             </Table>
                         }
+
                          <Row>
                             <CanvasEvaluateButton/>
                             <ClearCanvasButton/>
                             <SaveCanvasButton/>
                          </Row>
+
                     </Col>
                 </Row>
                 <Row>
@@ -112,6 +111,9 @@ function Home() {
                             <h2 className="mt-2 mb-3" style={{color: '#FFFFFF'}}>Translations</h2>
                             <SavedTranscriptTable/>
                         </Col>
+                    }
+                    {
+                        activeOption === options.IMAGE_AUGMENTATION && segmentationResult !== null && <SegmentationImageResult />
                     }
                 </Row>
             </ResultTableProvider>

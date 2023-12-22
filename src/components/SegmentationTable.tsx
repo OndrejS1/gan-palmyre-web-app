@@ -5,7 +5,7 @@ import { Table } from "react-bootstrap";
 const SegmentationTable: React.FC<SegmentationResponse> = ({ transcript, image }) => {
     return (
         <div>
-            <h2 className="my-5">
+            <h2 className="my-5" style={{ color: '#FFFFFF' }}>
                 Image Segmentation Result
             </h2>
             <Table striped bordered hover variant="dark" style={{marginTop: 10}}>

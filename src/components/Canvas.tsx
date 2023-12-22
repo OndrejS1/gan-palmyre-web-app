@@ -8,7 +8,7 @@ export function Canvas() {
         prepareCanvas,
         startDrawing,
         finishDrawing,
-        draw,
+        draw
     } = useCanvas();
 
     useEffect(() => {
@@ -16,8 +16,9 @@ export function Canvas() {
     }, []);
 
     return (
-        <Col style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Col style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 40}}>
             <canvas
+                id={'canvas'}
                 onMouseDown={startDrawing}
                 onMouseUp={finishDrawing}
                 onMouseMove={draw}
