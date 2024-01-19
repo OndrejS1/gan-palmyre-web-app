@@ -5,7 +5,7 @@ import {useCanvas} from "../context/CanvasContext";
 
 export const CanvasEvaluateButton: React.FunctionComponent<ButtonProps> = () => {
     const { handleEvaluateClick } = useResultTable();
-    const { handwritten } = useCanvas();
+    const { selectedOption } = useCanvas();
 
-    return <Button className="mt-3" variant="outline-success" onClick={() => handleEvaluateClick(handwritten)}>Evaluate</Button>
+    return <Button className="mt-3" variant="outline-success" onClick={() => handleEvaluateClick(selectedOption)}>Evaluate</Button>
 }

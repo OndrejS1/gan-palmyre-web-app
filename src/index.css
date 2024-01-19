@@ -68,3 +68,88 @@ body {
 h1, h2 {
   color: #FFFFFF;
 }
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjust as necessary */
+}
+
+.button-group button {
+  flex: 1;
+  padding: 15px 20px;
+  margin: 0 10px; /* Space between buttons */
+  border-radius: 10px; /* Rounded corners */
+  border: none;
+  background-color: #f0f0f0; /* Default background */
+  color: #666; /* Default text color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-group button:hover {
+  background-color: #e0e0e0;
+}
+
+.button-group button.active {
+  background-color: #3f51b5; /* Active background */
+  color: white; /* Active text color */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Elevated shadow */
+  transform: translateY(-3px); /* Raised effect */
+}
+
+.button-group button .icon {
+  font-size: 24px; /* Icon size */
+  margin-bottom: 5px; /* Space between icon and label */
+}
+
+.button-group button .label {
+  font-size: 14px; /* Label size */
+  text-transform: uppercase; /* Uppercase label */
+  letter-spacing: 1px; /* Spacing between letters */
+}
+
+.selected {
+  background-color: #e8e8e8; /* or any other color that fits your design */
+}
+
+label span {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.loading-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

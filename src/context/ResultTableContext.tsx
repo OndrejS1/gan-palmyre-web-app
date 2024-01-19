@@ -1,6 +1,7 @@
 import React, {FC, ReactNode, useContext, useState} from "react";
 import {resizeCanvas} from "../utils/CanvasResizer";
 import {useCanvas} from "./CanvasContext";
+import {OptionValues, options} from "../constants/ButtonOptions";
 
 
 const ResultTableContext = React.createContext(null);
@@ -21,9 +22,14 @@ export type SavedResult = {
     savedImg: string
 }
 
+export type SegmentationResponse = {
+    image: string,
+    transcript: Array<Array<string>>
+}
+
 export const ResultTableProvider: FC<Props> = ({ children }): any => {
 
-    const { canvasRef, cutSquareFromImage } = useCanvas();
+    const { canvasRef, cutSquareFromImage, augmentedImage, setIsLoading, setSegmentationResult,segmentationResult  } = useCanvas();
     const [predictionResult, setPredictionResult] = useState<Array<PredictionResponse>>([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}]);
     const [savedResults, setSavedResult] = useState<Array<SavedResult>>([]);
     const [lastEvaluatedImage, setLastEvaluatedImage] = useState(null);
@@ -64,15 +70,33 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         "100":"\uD802\uDC7E",
         "20":"\uD802\uDC7F"
     };
-    const handleEvaluateClick = (isHandwritten: boolean) => {
+    const handleEvaluateClick = (selectionOption: OptionValues) => {
 
-        if (isHandwritten) {
-            evaluateHandwrittenCanvasSnapshot()
-                .then(result => {
-                    setPredictionResult(result)
-                });
-        } else {
-            handleEvaluateAnnotationClick();
+        setIsLoading(true);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 150000);
+
+        switch (selectionOption) {
+            case options.IMAGE_AUGMENTATION:
+                handleAugmentedTranscriptClick().then(result => {
+                    setSegmentationResult(result);
+                    setIsLoading(false);
+                })
+                break;
+            case options.IMAGE_ANNOTATION:
+                handleEvaluateAnnotationClick()
+                setIsLoading(false);
+                break;
+            case options.HANDWRITTEN:
+                evaluateHandwrittenCanvasSnapshot()
+                    .then(result => {
+                        setPredictionResult(result)
+                        setIsLoading(false);
+                    });
+                break;
+            default:
+                console.log('Invalid action!');
         }
     }
 
@@ -84,6 +108,20 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
             }))
     }
 
+    const handleAugmentedTranscriptClick = async () => {
+
+        const formData = new FormData();
+        formData.append('imageBase64', augmentedImage);
+
+        const response = await fetch(
+            'https://ml-research.pef.czu.cz/api/convert-augmented',
+            {
+                method: 'post',
+                body: formData
+            });
+        return await response.json();
+
+    }
     const evaluateAnnotationCanvasSnapshot = async (annotationResult: string) => {
         const formData = new FormData();
         formData.append('imageBase64', annotationResult);
@@ -114,20 +152,28 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
             }).then(response => response.json());
     }
 
-    const handleSaveClick = () => {
-        const table = document.getElementById('result-table-body');
-        // @ts-ignore
-        let inputChoiceId = Array.from(document.getElementsByName("radio1")).find(r => r.checked).id;
-        let rowNumber = inputChoiceId.charAt(inputChoiceId.length - 1);
-        // @ts-ignore
-        const resultClass = table.rows[rowNumber].cells[2].innerText;
-        // @ts-ignore
-        const resultProbability = table.rows[rowNumber].cells[3].innerText;
-        savedResults.push({"palmyreLetter":resultClass, "probability":resultProbability, "savedImg":lastEvaluatedImage})
-        setSavedResult(savedResults);
-        setReload(!reload);
-        setPredictionResult([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}])
-
+    const handleSaveClick = (selectionOption: OptionValues) => {
+        switch (selectionOption) {
+            case options.HANDWRITTEN || options.IMAGE_ANNOTATION:
+                const table = document.getElementById('result-table-body');
+                // @ts-ignore
+                let inputChoiceId = Array.from(document.getElementsByName("radio1")).find(r => r.checked).id;
+                let rowNumber = inputChoiceId.charAt(inputChoiceId.length - 1);
+                // @ts-ignore
+                const resultClass = table.rows[rowNumber].cells[2].innerText;
+                // @ts-ignore
+                const resultProbability = table.rows[rowNumber].cells[3].innerText;
+                savedResults.push({"palmyreLetter":resultClass, "probability":resultProbability, "savedImg":lastEvaluatedImage})
+                setSavedResult(savedResults);
+                setReload(!reload);
+                setPredictionResult([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}])
+                break;
+            case options.IMAGE_AUGMENTATION:
+                alert("Have not been implemented yet!");
+                break;
+            default:
+                alert("Unsupported option!");
+        }
     }
 
     return (
@@ -141,7 +187,8 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
                 lastEvaluatedImage,
                 setSavedResult,
                 reload,
-                palmyreUnicodeMap
+                palmyreUnicodeMap,
+                segmentationResult
             }}>
             {children}
         </ResultTableContext.Provider>

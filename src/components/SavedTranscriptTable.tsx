@@ -1,10 +1,12 @@
 import React, {ReactElement, useEffect} from 'react'
 import {Button, Table, TableProps} from "react-bootstrap";
 import {SavedResult, useResultTable} from "../context/ResultTableContext";
+import {useCanvas} from "../context/CanvasContext";
 
 export const SavedTranscriptTable: React.FunctionComponent<TableProps> = () => {
 
     const { savedResults, setSavedResult, reload, palmyreUnicodeMap } = useResultTable()
+    const { selectedOption } = useCanvas();
 
     useEffect(() => {
         loadTable();
