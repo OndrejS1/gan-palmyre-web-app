@@ -120,7 +120,6 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
 
     async function cutSquareFromImage(): Promise<string>  {
         const hiddenCanvas = hiddenCanvasRef.current;
-        console.log(hiddenCanvas)
 
         return await convertURIToImageData(hiddenCanvas.toDataURL()).then(() =>
             {

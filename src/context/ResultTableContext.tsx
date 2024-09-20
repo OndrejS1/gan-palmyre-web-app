@@ -89,7 +89,6 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
                 setIsLoading(false);
                 break;
             case options.HANDWRITTEN:
-                console.log("Handwritten")
                 evaluateHandwrittenCanvasSnapshot()
                     .then(result => {
                         setPredictionResult(result)
@@ -115,7 +114,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         formData.append('imageBase64', augmentedImage);
 
         const response = await fetch(
-            'http://127.0.0.1:5000/convert-augmented',
+            'https://ml-research.pef.czu.cz/api/convert-augmented',
             {
                 method: 'post',
                 body: formData
@@ -128,7 +127,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         formData.append('imageBase64', annotationResult);
 
         return fetch(
-            'http://127.0.0.1:5000/predict',
+            'https://ml-research.pef.czu.cz/api/predict',
             {
                 method: 'post',
                 body: formData
@@ -144,9 +143,8 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         formData.append('imageBase64', canvasData);
 
         setLastEvaluatedImage(canvasData);
-        console.log(formData)
         return fetch(
-            'http://127.0.0.1:5000/predict-handwritten',
+            'https://ml-research.pef.czu.cz/api/predict-handwritten',
             {
                 method: 'post',
                 body: formData
