@@ -89,6 +89,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
                 setIsLoading(false);
                 break;
             case options.HANDWRITTEN:
+                console.log("Handwritten")
                 evaluateHandwrittenCanvasSnapshot()
                     .then(result => {
                         setPredictionResult(result)
@@ -114,7 +115,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         formData.append('imageBase64', augmentedImage);
 
         const response = await fetch(
-            'https://ml-research.pef.czu.cz/api/convert-augmented',
+            'http://127.0.0.1:5000/convert-augmented',
             {
                 method: 'post',
                 body: formData
@@ -127,7 +128,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         formData.append('imageBase64', annotationResult);
 
         return fetch(
-            'https://ml-research.pef.czu.cz/api/predict',
+            'http://127.0.0.1:5000/predict',
             {
                 method: 'post',
                 body: formData
@@ -143,9 +144,9 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         formData.append('imageBase64', canvasData);
 
         setLastEvaluatedImage(canvasData);
-
+        console.log(formData)
         return fetch(
-            'https://ml-research.pef.czu.cz/api/predict-handwritten',
+            'http://127.0.0.1:5000/predict-handwritten',
             {
                 method: 'post',
                 body: formData
@@ -154,7 +155,8 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
 
     const handleSaveClick = (selectionOption: OptionValues) => {
         switch (selectionOption) {
-            case options.HANDWRITTEN || options.IMAGE_ANNOTATION:
+            case options.HANDWRITTEN:
+            case options.IMAGE_ANNOTATION:
                 const table = document.getElementById('result-table-body');
                 // @ts-ignore
                 let inputChoiceId = Array.from(document.getElementsByName("radio1")).find(r => r.checked).id;
