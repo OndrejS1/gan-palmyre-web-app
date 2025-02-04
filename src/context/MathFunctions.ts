@@ -1,4 +1,4 @@
-export function scaleImage(image:any, maxWidth:any, maxHeight:any) {
+export function scaleImage(image: any, maxWidth: any, maxHeight: any): void {
     // Get the original aspect ratio of the image
     const aspectRatio = image.width / image.height;
 

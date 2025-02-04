@@ -3,7 +3,6 @@ import {resizeCanvas} from "../utils/CanvasResizer";
 import {useCanvas} from "./CanvasContext";
 import {OptionValues, options} from "../constants/ButtonOptions";
 
-
 const ResultTableContext = React.createContext(null);
 
 interface Props {
