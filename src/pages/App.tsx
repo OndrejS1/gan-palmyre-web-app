@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import '../resources/styles/App.css';
+import '../resources/styles/App.scss';
 
 import Home from "./Home";
 import {Route, Routes} from "react-router-dom";
@@ -23,7 +23,7 @@ function App() {
     return (
     <>
         <NavbarMenu />
-        <div className="container" style={{backgroundColor: '#161617'}}>
+        <div className="container">
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />

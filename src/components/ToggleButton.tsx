@@ -1,4 +1,5 @@
 import React, {ReactNode} from 'react';
+import classNames from 'classnames';
 // Other necessary imports...
 
 interface ToggleButtonProps {
@@ -10,7 +11,7 @@ interface ToggleButtonProps {
 
 const ToggleButton: React.FC<ToggleButtonProps> = ({ active, onClick, icon, label }) => {
     return (
-        <button className={`toggle-button ${active ? 'active' : ''}`} onClick={onClick}>
+        <button className={classNames('toggle-button', 'mb-3', { active })} onClick={onClick}>
             <span className="icon">{icon}</span>
             <span className="label">{label}</span>
         </button>

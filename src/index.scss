@@ -9,6 +9,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html, #root {
+  background-color: #161617;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
@@ -62,7 +66,7 @@ nav > div > div {
 }
 
 h1, h2 {
-  color: $color-white;
+  color: $color-white !important;
 }
 
 .button-group {
@@ -148,4 +152,9 @@ label span {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.logo-czu {
+  max-width: 100px;
+  max-height: 100px;
 }

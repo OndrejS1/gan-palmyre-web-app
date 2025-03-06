@@ -9,7 +9,7 @@ import {CanvasEvaluateButton} from "../components/CanvasEvaluateButton";
 import {SaveCanvasButton} from "../components/CanvasSaveButton";
 import {SavedTranscriptTable} from "../components/SavedTranscriptTable";
 import ImageAnnotation from "../components/ImageAnnotation";
-import './../resources/styles/ToggleButton.css';
+import '../resources/styles/ToggleButton.scss';
 import {useCanvas} from "../context/CanvasContext";
 import BlueContainerWithTooltip from "../components/BlueContainerWithTooltip";
 import { ReactComponent as TranscriptIcon } from '../resources/icons/transcript.svg';
@@ -20,7 +20,6 @@ import AugmentedTranscriptFileUpload from "../components/AugmentedTranscriptFile
 import LoadingOverlay from "../components/LoadingOverlay";
 import {TranscriptResultsTable} from "../components/TranscriptResultsTable";
 import {SegmentationImageResult} from "../components/SegmentationImageResult";
-
 
 function Home() {
 
@@ -46,31 +45,33 @@ function Home() {
     return (
         <Container className="mt-5" style={{backgroundColor: '#161617'}}>
             <Row>
-                <Col>
-                    <h1 className="mb-5" style={{ color: '#FFFFFF' }}>Palmyre Translation Tool</h1>
+                <Col className="col-12">
+                    <h1 className="mb-3">Palmyre Translation Tool</h1>
                     <BlueContainerWithTooltip option={activeOption} />
                 </Col>
 
-                <Col>
-                    <ButtonGroup className="button-group">
-                        <ToggleButton
-                            active={activeOption === options.HANDWRITTEN}
-                            onClick={handleHandwrittenClick}
-                            icon={<HandwrittenIcon />}
-                            label="Handwritten"
-                        />
-                        <ToggleButton
-                            active={activeOption === options.IMAGE_ANNOTATION}
-                            onClick={handleImageAnnotationClick}
-                            icon={<ImageAnnotationIcon />}
-                            label="Image Annotation"
-                        />
-                        <ToggleButton
-                            active={activeOption === options.IMAGE_AUGMENTATION}
-                            onClick={handleImageAugmentationClick}
-                            icon={<TranscriptIcon />}
-                            label="Segmentation & Transcript"
-                        />
+                <Col className="col-12">
+                    <ButtonGroup className="button-group w-100">
+                        <Row className="w-100">
+                            <ToggleButton
+                                active={activeOption === options.HANDWRITTEN}
+                                onClick={handleHandwrittenClick}
+                                icon={<HandwrittenIcon />}
+                                label="Handwritten"
+                            />
+                            <ToggleButton
+                                active={activeOption === options.IMAGE_ANNOTATION}
+                                onClick={handleImageAnnotationClick}
+                                icon={<ImageAnnotationIcon />}
+                                label="Image Annotation"
+                            />
+                            <ToggleButton
+                                active={activeOption === options.IMAGE_AUGMENTATION}
+                                onClick={handleImageAugmentationClick}
+                                icon={<TranscriptIcon />}
+                                label="Segmentation & Transcript"
+                            />
+                        </Row>
                     </ButtonGroup>
                 </Col>
             </Row>

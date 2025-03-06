@@ -3,24 +3,28 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 
 export default function NavbarMenu() {
     return (
-        <Navbar bg="dark" expand="lg">
+        // only desktop menu
+        <Navbar bg="dark" expand="lg" variant="dark">
             <Container>
                 <Navbar.Brand>
                     <CustomLink to="/">
                         <img
                             src="/logo-czu.png"
-                            width="100"
-                            height="80"
+                            className="logo-czu"
                             alt="CZU Logo"
                         />Palmyre OCR</CustomLink>
                 </Navbar.Brand>
+
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Nav className="me-auto">
-                    <CustomLink to="/">Home</CustomLink>
-                    <CustomLink to="/about">About</CustomLink>
-                    <CustomLink to="/acknowledgement">Acknowledgement</CustomLink>
-                    <CustomLink to="/contacts">Contacts</CustomLink>
-                </Nav>
+
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <CustomLink to="/">Home</CustomLink>
+                        <CustomLink to="/about">About</CustomLink>
+                        <CustomLink to="/acknowledgement">Acknowledgement</CustomLink>
+                        <CustomLink to="/contacts">Contacts</CustomLink>
+                    </Nav>
+                </Navbar.Collapse>
             </Container>
         </Navbar>
     );
