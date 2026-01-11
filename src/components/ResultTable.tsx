@@ -37,19 +37,21 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
     }
 
     return (
-            <Table striped bordered hover variant="dark" id={"resultTable2"}>
+        <div className="table-responsive">
+            <Table striped bordered hover variant="dark" id="resultTable2">
                 <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Transcript</th>
-                    <th>Palmyre letter</th>
-                    <th>Probability</th>
-                    <th>Choice</th>
-                </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Transcript</th>
+                        <th>Palmyre letter</th>
+                        <th>Probability</th>
+                        <th>Choice</th>
+                    </tr>
                 </thead>
                 {
                     loadTable()
                 }
             </Table>
+        </div>
     );
 }
