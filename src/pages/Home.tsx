@@ -41,84 +41,85 @@ function Home() {
         setSelectedOption(options.IMAGE_AUGMENTATION);
     };
 
-    // @ts-ignore
     return (
-        <Container className="mt-5" style={{backgroundColor: '#161617'}}>
-            <Row>
-                <Col className="col-12">
-                    <h1 className="mb-3">Palmyre Translation Tool</h1>
-                    <BlueContainerWithTooltip option={activeOption} />
-                </Col>
-
-                <Col className="col-12">
-                    <ButtonGroup className="button-group w-100">
-                        <Row className="w-100">
-                            <ToggleButton
-                                active={activeOption === options.HANDWRITTEN}
-                                onClick={handleHandwrittenClick}
-                                icon={<HandwrittenIcon />}
-                                label="Handwritten"
-                            />
-                            <ToggleButton
-                                active={activeOption === options.IMAGE_ANNOTATION}
-                                onClick={handleImageAnnotationClick}
-                                icon={<ImageAnnotationIcon />}
-                                label="Image Annotation"
-                            />
-                            <ToggleButton
-                                active={activeOption === options.IMAGE_AUGMENTATION}
-                                onClick={handleImageAugmentationClick}
-                                icon={<TranscriptIcon />}
-                                label="Segmentation & Transcript"
-                            />
-                        </Row>
-                    </ButtonGroup>
-                </Col>
-            </Row>
-
-            <ResultTableProvider>
-                <LoadingOverlay isLoading={isLoading} />
+        <>
+            <Container className="mt-5" style={{backgroundColor: '#161617'}}>
                 <Row>
-                    <Col>
-                        {activeOption === options.HANDWRITTEN && <Canvas />}
-                        {activeOption === options.IMAGE_ANNOTATION && <ImageAnnotation />}
-
-                        {activeOption === options.IMAGE_AUGMENTATION &&
-                            <TranscriptResultsTable/>
-                        }
-
-                        {
-                            activeOption === options.IMAGE_AUGMENTATION && <AugmentedTranscriptFileUpload />
-                        }
+                    <Col className="col-12">
+                        <h1 className="mb-3">Palmyre Translation Tool</h1>
+                        <BlueContainerWithTooltip option={activeOption} />
                     </Col>
-                    <Col>
-                        {activeOption !== options.IMAGE_AUGMENTATION &&
-                            <Table id={'resultTable'} className={'mt-5'}>
-                                <ResultTable/>
-                            </Table>
-                        }
 
-                         <Row>
-                            <CanvasEvaluateButton/>
-                            <ClearCanvasButton/>
-                            <SaveCanvasButton/>
-                         </Row>
-
+                    <Col className="col-12">
+                        <ButtonGroup className="button-group w-100">
+                            <Row className="w-100">
+                                <ToggleButton
+                                    active={activeOption === options.HANDWRITTEN}
+                                    onClick={handleHandwrittenClick}
+                                    icon={<HandwrittenIcon />}
+                                    label="Handwritten"
+                                />
+                                <ToggleButton
+                                    active={activeOption === options.IMAGE_ANNOTATION}
+                                    onClick={handleImageAnnotationClick}
+                                    icon={<ImageAnnotationIcon />}
+                                    label="Image Annotation"
+                                />
+                                <ToggleButton
+                                    active={activeOption === options.IMAGE_AUGMENTATION}
+                                    onClick={handleImageAugmentationClick}
+                                    icon={<TranscriptIcon />}
+                                    label="Segmentation & Transcript"
+                                />
+                            </Row>
+                        </ButtonGroup>
                     </Col>
                 </Row>
-                <Row>
-                    {activeOption !== options.IMAGE_AUGMENTATION &&
+
+                <ResultTableProvider>
+                    <LoadingOverlay isLoading={isLoading} />
+                    <Row>
                         <Col>
-                            <h2 className="mt-2 mb-3" style={{color: '#FFFFFF'}}>Translations</h2>
-                            <SavedTranscriptTable/>
+                            {activeOption === options.HANDWRITTEN && <Canvas />}
+                            {activeOption === options.IMAGE_ANNOTATION && <ImageAnnotation />}
+
+                            {activeOption === options.IMAGE_AUGMENTATION &&
+                                <TranscriptResultsTable/>
+                            }
+
+                            {
+                                activeOption === options.IMAGE_AUGMENTATION && <AugmentedTranscriptFileUpload />
+                            }
                         </Col>
-                    }
-                    {
-                        activeOption === options.IMAGE_AUGMENTATION && segmentationResult !== null && <SegmentationImageResult />
-                    }
-                </Row>
-            </ResultTableProvider>
-        </Container>
+                        <Col>
+                            {activeOption !== options.IMAGE_AUGMENTATION &&
+                                <Table id={'resultTable'} className={'mt-5'}>
+                                    <ResultTable/>
+                                </Table>
+                            }
+
+                             <Row>
+                                <CanvasEvaluateButton/>
+                                <ClearCanvasButton/>
+                                <SaveCanvasButton/>
+                             </Row>
+
+                        </Col>
+                    </Row>
+                    <Row>
+                        {activeOption !== options.IMAGE_AUGMENTATION &&
+                            <Col>
+                                <h2 className="mt-2 mb-3" style={{color: '#FFFFFF'}}>Translations</h2>
+                                <SavedTranscriptTable/>
+                            </Col>
+                        }
+                        {
+                            activeOption === options.IMAGE_AUGMENTATION && segmentationResult !== null && <SegmentationImageResult />
+                        }
+                    </Row>
+                </ResultTableProvider>
+            </Container>
+        </>
     );
 }
 

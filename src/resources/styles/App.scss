@@ -7,6 +7,12 @@ nav div li {
     text-decoration: none;
     color: $color-grey-100;
     font-weight: bold;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    &:hover {
+        text-decoration: underline;
+    }
   }
 }
 

@@ -5,6 +5,7 @@ import Home from "./Home";
 import {Route, Routes} from "react-router-dom";
 import NavbarMenu from "../components/NavbarMenu";
 import About from "./About";
+import Gallery from "./Gallery";
 import Acknowledgement from "./Acknowledgement";
 import Contacts from "./Contacts";
 import WebFont from 'webfontloader';
@@ -21,19 +22,19 @@ function App() {
 
 
     return (
-    <>
-        <NavbarMenu />
-        <div className="container">
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contacts" element={<Contacts />} />
-                <Route path="/acknowledgement" element={<Acknowledgement />} />
-            </Routes>
-        </div>
-    </>
+        <>
+            <NavbarMenu />
+            <div className="container">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/gallery" element={<Gallery />} />
+                    <Route path="/acknowledgement" element={<Acknowledgement />} />
+                    <Route path="/contacts" element={<Contacts />} />
+                </Routes>
+            </div>
+        </>
   );
 }
 
 export default App;
-

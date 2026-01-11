@@ -1,7 +1,7 @@
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import {Container, Nav, Navbar} from "react-bootstrap";
 
-export default function NavbarMenu() {
+function NavbarMenu() {
     return (
         // only desktop menu
         <Navbar bg="dark" expand="lg" variant="dark">
@@ -21,6 +21,7 @@ export default function NavbarMenu() {
                     <Nav className="me-auto">
                         <CustomLink to="/">Home</CustomLink>
                         <CustomLink to="/about">About</CustomLink>
+                        <CustomLink to="/gallery">Gallery</CustomLink>
                         <CustomLink to="/acknowledgement">Acknowledgement</CustomLink>
                         <CustomLink to="/contacts">Contacts</CustomLink>
                     </Nav>
@@ -29,6 +30,8 @@ export default function NavbarMenu() {
         </Navbar>
     );
 }
+
+export default NavbarMenu;
 
 // @ts-ignore
 function CustomLink({ to, children, ...props }) {
