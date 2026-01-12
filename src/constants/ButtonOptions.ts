@@ -1,7 +1,8 @@
 export const options = {
-    IMAGE_AUGMENTATION: 'Image Augmentation',
     HANDWRITTEN: 'handwritten',
-    IMAGE_ANNOTATION: 'Image Annotation',
+    IMAGE_ANNOTATION_CHAR: 'Image Annotation - one char',
+    IMAGE_ANNOTATION_SENTENCES: 'Image Annotation - words and sentences',
+    IMAGE_AUGMENTATION: 'Image Augmentation',
 } as const;
 
 export type OptionKeys = keyof typeof options;

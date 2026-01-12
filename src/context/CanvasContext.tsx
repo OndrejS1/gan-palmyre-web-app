@@ -246,8 +246,8 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
             case options.IMAGE_AUGMENTATION:
                 clearSegmentation();
                 break;
-            case options.IMAGE_ANNOTATION:
-                clearImageAnnotation();
+            case options.IMAGE_ANNOTATION_CHAR:
+                clearImageAnnotationChar();
                 break;
             case options.HANDWRITTEN:
                 clearHandwritten();
@@ -257,7 +257,7 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         }
     }
 
-    function clearImageAnnotation() {
+    function clearImageAnnotationChar() {
         const cvs = document.getElementById("canvas");
         const uploadWindow = document.getElementById("fileUploadField");
 

@@ -83,8 +83,8 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
                     setIsLoading(false);
                 })
                 break;
-            case options.IMAGE_ANNOTATION:
-                handleEvaluateAnnotationClick()
+            case options.IMAGE_ANNOTATION_CHAR:
+                handleEvaluateAnnotationCharClick()
                 setIsLoading(false);
                 break;
             case options.HANDWRITTEN:
@@ -99,7 +99,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         }
     }
 
-    const handleEvaluateAnnotationClick = () => {
+    const handleEvaluateAnnotationCharClick = () => {
         cutSquareFromImage().then((res: string) => evaluateAnnotationCanvasSnapshot(res)
             .then(result => {
                 setLastEvaluatedImage(res);
@@ -153,7 +153,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
     const handleSaveClick = (selectionOption: OptionValues) => {
         switch (selectionOption) {
             case options.HANDWRITTEN:
-            case options.IMAGE_ANNOTATION:
+            case options.IMAGE_ANNOTATION_CHAR:
                 const table = document.getElementById('result-table-body');
                 // @ts-ignore
                 let inputChoiceId = Array.from(document.getElementsByName("radio1")).find(r => r.checked).id;
@@ -180,7 +180,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
             value={{
                 predictionResult,
                 handleEvaluateClick,
-                handleEvaluateAnnotationClick,
+                handleEvaluateAnnotationClick: handleEvaluateAnnotationCharClick,
                 handleSaveClick,
                 savedResults,
                 lastEvaluatedImage,

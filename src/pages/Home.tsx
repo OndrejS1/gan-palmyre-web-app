@@ -31,9 +31,14 @@ function Home() {
         setSelectedOption(options.HANDWRITTEN);
     };
 
-    const handleImageAnnotationClick = () => {
-        setActiveOption(options.IMAGE_ANNOTATION);
-        setSelectedOption(options.IMAGE_ANNOTATION);
+    const handleImageAnnotationCharClick = () => {
+        setActiveOption(options.IMAGE_ANNOTATION_CHAR);
+        setSelectedOption(options.IMAGE_ANNOTATION_CHAR);
+    };
+
+    const handleImageAnnotationSentencesClick = () => {
+        setActiveOption(options.IMAGE_ANNOTATION_SENTENCES);
+        setSelectedOption(options.IMAGE_ANNOTATION_SENTENCES);
     };
 
     const handleImageAugmentationClick = () => {
@@ -59,12 +64,21 @@ function Home() {
                                     icon={<HandwrittenIcon />}
                                     label="Handwritten"
                                 />
+
                                 <ToggleButton
-                                    active={activeOption === options.IMAGE_ANNOTATION}
-                                    onClick={handleImageAnnotationClick}
+                                    active={activeOption === options.IMAGE_ANNOTATION_CHAR}
+                                    onClick={handleImageAnnotationCharClick}
                                     icon={<ImageAnnotationIcon />}
-                                    label="Image Annotation"
+                                    label="Image Annotation - one char"
                                 />
+
+                                <ToggleButton
+                                    active={activeOption === options.IMAGE_ANNOTATION_SENTENCES}
+                                    onClick={handleImageAnnotationSentencesClick}
+                                    icon={<ImageAnnotationIcon />}
+                                    label="Image Annotation - words and sentences"
+                                />
+
                                 <ToggleButton
                                     active={activeOption === options.IMAGE_AUGMENTATION}
                                     onClick={handleImageAugmentationClick}
@@ -81,7 +95,7 @@ function Home() {
                     <Row>
                         <Col>
                             {activeOption === options.HANDWRITTEN && <Canvas />}
-                            {activeOption === options.IMAGE_ANNOTATION && <ImageAnnotation />}
+                            {activeOption === options.IMAGE_ANNOTATION_CHAR && <ImageAnnotation />}
 
                             {activeOption === options.IMAGE_AUGMENTATION &&
                                 <TranscriptResultsTable/>
