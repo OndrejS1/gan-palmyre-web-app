@@ -2,6 +2,7 @@ import React, {ReactElement, useEffect} from 'react'
 import {Button, Table, TableProps} from "react-bootstrap";
 import {SavedResult, useResultTable} from "../context/ResultTableContext";
 import {useCanvas} from "../context/CanvasContext";
+import {t} from "../i18n";
 
 export const SavedTranscriptTable: React.FunctionComponent<TableProps> = () => {
 
@@ -55,12 +56,12 @@ export const SavedTranscriptTable: React.FunctionComponent<TableProps> = () => {
         <Table striped bordered hover variant="dark">
             <thead>
             <tr>
-                <th>#</th>
-                <th>Image Sample</th>
-                <th>Transcript</th>
-                <th>Palmyre letter</th>
-                <th>Probability</th>
-                <th>Action</th>
+                <th>{t('tables.savedTable.columns.number')}</th>
+                <th>{t('tables.savedTable.columns.imageSample')}</th>
+                <th>{t('tables.savedTable.columns.transcript')}</th>
+                <th>{t('tables.savedTable.columns.palmyreLetter')}</th>
+                <th>{t('tables.savedTable.columns.probability')}</th>
+                <th>{t('tables.savedTable.columns.action')}</th>
             </tr>
             </thead>
             {

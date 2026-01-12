@@ -1,6 +1,7 @@
 import React, {ReactElement, useEffect} from 'react'
 import {Table, TableProps} from "react-bootstrap";
 import {PredictionResponse, useResultTable} from "../context/ResultTableContext";
+import {t} from "../i18n";
 
 export const ResultTable: React.FunctionComponent<TableProps> = () => {
 
@@ -41,11 +42,11 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
             <Table striped bordered hover variant="dark" id="resultTable2">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Transcript</th>
-                        <th>Palmyre letter</th>
-                        <th>Probability</th>
-                        <th>Choice</th>
+                        <th>{t('tables.evaluateTable.columns.number')}</th>
+                        <th>{t('tables.evaluateTable.columns.transcript')}</th>
+                        <th>{t('tables.evaluateTable.columns.palmyreLetter')}</th>
+                        <th>{t('tables.evaluateTable.columns.probability')}</th>
+                        <th>{t('tables.evaluateTable.columns.choice')}</th>
                     </tr>
                 </thead>
                 {
