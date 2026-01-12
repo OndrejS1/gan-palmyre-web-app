@@ -1,5 +1,6 @@
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import {Container, Nav, Navbar} from "react-bootstrap";
+import {t} from "../i18n";
 
 function NavbarMenu() {
     return (
@@ -12,18 +13,18 @@ function NavbarMenu() {
                             src="/logo-czu.png"
                             className="logo-czu"
                             alt="CZU Logo"
-                        />Palmyre OCR</CustomLink>
+                        />{t('logo')}</CustomLink>
                 </Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <CustomLink to="/">Home</CustomLink>
-                        <CustomLink to="/about">About</CustomLink>
-                        <CustomLink to="/gallery">Gallery</CustomLink>
-                        <CustomLink to="/acknowledgement">Acknowledgement</CustomLink>
-                        <CustomLink to="/contacts">Contacts</CustomLink>
+                        <CustomLink to="/">{t('navbarMenu.home')}</CustomLink>
+                        <CustomLink to="/about">{t('navbarMenu.about')}</CustomLink>
+                        <CustomLink to="/gallery">{t('navbarMenu.gallery')}</CustomLink>
+                        <CustomLink to="/acknowledgement">{t('navbarMenu.acknowledgement')}</CustomLink>
+                        <CustomLink to="/contacts">{t('navbarMenu.contacts')}</CustomLink>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

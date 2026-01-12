@@ -20,6 +20,7 @@ import AugmentedTranscriptFileUpload from "../components/AugmentedTranscriptFile
 import LoadingOverlay from "../components/LoadingOverlay";
 import {TranscriptResultsTable} from "../components/TranscriptResultsTable";
 import {SegmentationImageResult} from "../components/SegmentationImageResult";
+import {t} from "../i18n";
 
 function Home() {
 
@@ -51,7 +52,7 @@ function Home() {
             <Container className="mt-5" style={{backgroundColor: '#161617'}}>
                 <Row>
                     <Col className="col-12">
-                        <h1 className="mb-3">Palmyre Translation Tool</h1>
+                        <h1 className="mb-3">{t('headline.main')}</h1>
                         <BlueContainerWithTooltip option={activeOption} />
                     </Col>
 
@@ -123,7 +124,7 @@ function Home() {
                     <Row>
                         {activeOption !== options.IMAGE_AUGMENTATION &&
                             <Col>
-                                <h2 className="mt-2 mb-3" style={{color: '#FFFFFF'}}>Translations</h2>
+                                <h2 className="mt-2 mb-3" style={{color: '#FFFFFF'}}>{t('headline.translations')}</h2>
                                 <SavedTranscriptTable/>
                             </Col>
                         }

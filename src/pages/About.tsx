@@ -1,11 +1,12 @@
 import React from "react";
 import {Container} from "react-bootstrap";
+import {t} from "../i18n";
 
 function About() {
     return (
         <>
             <Container>
-                <h1 className="mt-5">About</h1>
+                <h1 className="mt-5">{t('navbarMenu.about')}</h1>
 
                 <p className="mt-5 text-light">
                     The project of Palmyrene alphabet transliteration started in 2021 with the idea to create a complete Palmyrene Aramaic OCR in the future. The main idea of this study was to help researchers of biblical studies semi-automatically transliterate, and possibly translate ancient Aramaic texts, and also create an AI method of transliterating other alphabets to Latin, if a different dataset is used on the input. The idea was also to bring ancient texts to public, with an Android mobile application, that anyone can use, for example when visiting in a museum.

@@ -1,8 +1,10 @@
+import {t} from "../i18n";
+
 export const options = {
-    HANDWRITTEN: 'handwritten',
-    IMAGE_ANNOTATION_CHAR: 'Image Annotation - one char',
-    IMAGE_ANNOTATION_SENTENCES: 'Image Annotation - words and sentences',
-    IMAGE_AUGMENTATION: 'Image Augmentation',
+    HANDWRITTEN: t('buttons.handwritten'),
+    IMAGE_ANNOTATION_CHAR: t('buttons.imageAnnotationChar'),
+    IMAGE_ANNOTATION_SENTENCES: t('buttons.imageAnnotationSentences'),
+    IMAGE_AUGMENTATION: t('buttons.imageAugmentation'),
 } as const;
 
 export type OptionKeys = keyof typeof options;

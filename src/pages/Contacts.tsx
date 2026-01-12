@@ -1,11 +1,12 @@
 import React from "react";
 import {Container} from "react-bootstrap";
+import {t} from "../i18n";
 
 function Contacts() {
     return (
         <>
             <Container>
-                <h1 className="mt-5">Contacts</h1>
+                <h1 className="mt-5">{t('navbarMenu.contacts')}</h1>
 
                 <p className="mt-5 text-light">
                     Ing. Adéla Hamplová * hamplova@pef.czu.cz

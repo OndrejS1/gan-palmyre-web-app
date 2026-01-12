@@ -86,13 +86,14 @@ export const CanvasProvider: FC<Props> = ({ children }): any => {
         square = { x: annotation.startX, y: annotation.startY, size: height }
     };
 
-    const endAnnotation = (e: MouseEvent | TouchEvent) => {
+    // const endAnnotation = (e: MouseEvent | TouchEvent) => {
+    const endAnnotation = () => {
         // @ts-ignore
         const width = annotation.endX - annotation.startX;
         // @ts-ignore
         const height = annotation.endY - annotation.startY;
 
-        if(width > height){
+        if(width > height) {
             square = {
                 // @ts-ignore
                 x: annotation.startX,

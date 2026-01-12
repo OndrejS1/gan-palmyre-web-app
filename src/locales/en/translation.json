@@ -1,0 +1,28 @@
+{
+  "headline": {
+    "main": "Palmyre Translation Tool",
+    "translations": "Translations"
+  },
+  "logo": "Palmyre OCR",
+  "navbarMenu": {
+    "home": "Home",
+    "about": "About",
+    "gallery": "Gallery",
+    "acknowledgement": "Acknowledgement",
+    "contacts": "Contacts"
+  },
+  "buttons": {
+    "handwritten": "Handwritten",
+    "imageAnnotationChar": "Image Annotation - one char",
+    "imageAnnotationSentences": "Image Annotation - words and sentences",
+    "imageAugmentation": "Image Augmentation",
+    "evaluate": "Evaluate",
+    "reset": "Reset",
+    "save": "Save",
+    "refresh": "Refresh"
+  },
+  "common": {
+    "error": "Error",
+    "unknownError": "Unknown error"
+  }
+}
