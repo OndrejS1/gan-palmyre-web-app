@@ -6,7 +6,7 @@ import {t} from "../i18n";
 const SegmentationTable: React.FC<SegmentationResponse> = ({ transcript, image }) => {
     return (
         <div>
-            <h2 className="my-5" style={{ color: '#FFFFFF' }}>{t('headline.imageSegmentationResult')}</h2>
+            <h2 className="my-5 headline-2">{t('headline.imageSegmentationResult')}</h2>
             <Table striped bordered hover variant="dark" style={{marginTop: 10}}>
                 <tbody>
                 {transcript.map((row, rowIndex) => (

@@ -6,7 +6,7 @@ function Acknowledgement() {
     return (
         <>
             <Container>
-                <h1 className="mt-5">{t('navbarMenu.acknowledgement')}</h1>
+                <h1 className="mt-5 headline-1">{t('navbarMenu.acknowledgement')}</h1>
 
                 <p className="mt-5 text-light">
                     The results and knowledge included in this project have been obtained owing to support from the following institutional grants: <br/><br/>

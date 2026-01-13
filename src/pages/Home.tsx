@@ -49,10 +49,10 @@ function Home() {
 
     return (
         <>
-            <Container className="mt-5" style={{backgroundColor: '#161617'}}>
+            <Container className="mt-5">
                 <Row>
                     <Col className="col-12">
-                        <h1 className="mb-3">{t('headline.main')}</h1>
+                        <h1 className="mb-3 headline-1">{t('headline.main')}</h1>
                         <BlueContainerWithTooltip option={activeOption} />
                     </Col>
 
@@ -63,28 +63,28 @@ function Home() {
                                     active={activeOption === options.HANDWRITTEN}
                                     onClick={handleHandwrittenClick}
                                     icon={<HandwrittenIcon />}
-                                    label="Handwritten"
+                                    label={t('buttons.handwritten')}
                                 />
 
                                 <ToggleButton
                                     active={activeOption === options.IMAGE_ANNOTATION_CHAR}
                                     onClick={handleImageAnnotationCharClick}
                                     icon={<ImageAnnotationIcon />}
-                                    label="Image Annotation - one char"
+                                    label={t('buttons.imageAnnotationChar')}
                                 />
 
                                 <ToggleButton
                                     active={activeOption === options.IMAGE_ANNOTATION_SENTENCES}
                                     onClick={handleImageAnnotationSentencesClick}
                                     icon={<ImageAnnotationIcon />}
-                                    label="Image Annotation - words and sentences"
+                                    label={t('buttons.imageAnnotationSentences')}
                                 />
 
                                 <ToggleButton
                                     active={activeOption === options.IMAGE_AUGMENTATION}
                                     onClick={handleImageAugmentationClick}
                                     icon={<TranscriptIcon />}
-                                    label="Segmentation & Transcript"
+                                    label={t('buttons.segmentationAndTranscript')}
                                 />
                             </Row>
                         </ButtonGroup>
@@ -124,7 +124,7 @@ function Home() {
                     <Row>
                         {activeOption !== options.IMAGE_AUGMENTATION &&
                             <Col>
-                                <h2 className="mt-2 mb-3" style={{color: '#FFFFFF'}}>{t('headline.translations')}</h2>
+                                <h2 className="mt-2 mb-3 headline-2">{t('headline.translations')}</h2>
                                 <SavedTranscriptTable/>
                             </Col>
                         }

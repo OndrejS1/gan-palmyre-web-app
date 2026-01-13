@@ -63,8 +63,8 @@ nav > div > div {
   padding: 10px;
 }
 
-h1, h2 {
-  color: $color-white !important;
+h1, h2, .headline-1, .headline-2 {
+  color: $color-white;
 }
 
 .button-group {
@@ -163,12 +163,4 @@ label span {
   width: 100%;
   border-collapse: collapse;
 }
-
-//@media screen and (max-width: 768px) {
-//  .table-responsive {
-//    overflow-x: auto;
-//    display: block;
-//    white-space: nowrap;
-//  }
-//}
 // /responsive table

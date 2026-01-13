@@ -17,6 +17,7 @@
     "imageAnnotationChar": "Image Annotation - one char",
     "imageAnnotationSentences": "Image Annotation - words and sentences",
     "imageAugmentation": "Image Augmentation",
+    "segmentationAndTranscript": "Segmentation & Transcript",
     "evaluate": "Evaluate",
     "reset": "Reset",
     "save": "Save",
