@@ -1,7 +1,8 @@
 {
   "headline": {
     "main": "Palmyre Translation Tool",
-    "translations": "Translations"
+    "translations": "Translations",
+    "imageSegmentationResult": "Image Segmentation Result"
   },
   "logo": "Palmyre OCR",
   "navbarMenu": {
