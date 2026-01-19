@@ -1,50 +1,105 @@
-# Getting Started with Palmyre OCR
+# Palmyre GAN - OCR & Image Recognition
 
-## Available Scripts
+A monorepo containing both the React frontend and Python Flask backend for the Palmyre GAN project - an application for handwritten text recognition and image classification using deep learning models.
 
-In the project directory, you can run:
+## Project Structure
 
-### `npm start`
+```
+gan-palmyre-web-app/
+├── frontend/          # React TypeScript frontend
+│   ├── src/
+│   ├── public/
+│   └── package.json
+├── backend/           # Python Flask backend with ML models
+│   ├── app.py
+│   ├── Requirements.txt
+│   └── static/        # ML models (.h5, .pt files)
+└── README.md
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Frontend (React)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The frontend is a React TypeScript application that provides the user interface for uploading images and displaying recognition results.
 
-### `npm test`
+### Setup & Run
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+cd frontend
+npm install
+npm start
+```
 
-### `npm run build`
+Open [http://localhost:3000](http://localhost:3000) to view in browser.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Available Scripts
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Command | Description |
+|---------|-------------|
+| `npm start` | Run development server |
+| `npm test` | Run tests in watch mode |
+| `npm run build` | Build for production |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Backend (Python Flask)
 
-### `npm run eject`
+The backend is a Flask API that serves ML models for:
+- **Handwritten text recognition** - TensorFlow/Keras model
+- **Photo classification** - TensorFlow/Keras model  
+- **Object detection/segmentation** - YOLOv8 model
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Setup & Run
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+cd backend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Create virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# or: venv\Scripts\activate  # Windows
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Install dependencies
+pip install -r Requirements.txt
 
-## Learn More
+# Run the server
+python app.py
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The API will be available at [http://localhost:5000](http://localhost:5000).
 
+### API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/convert` | POST | Classify handwritten/photo images |
+| `/convert-augmented` | POST | Object detection with visualization |
+
+## Development
+
+### Running Both Services
+
+**Terminal 1 - Backend:**
+```bash
+cd backend && python app.py
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd frontend && npm start
+```
+
+### Frontend Proxy Configuration
+
+To proxy API requests from the frontend to the backend during development, add to `frontend/package.json`:
+
+```json
+{
+  "proxy": "http://localhost:5000"
+}
+```
 
 ## TODO
 
-- Write documentation for deployment + run service as container inside SystemD
-- Add environment deployment variables
-- Add error handling of backend responses
-- Allow select whole column in table when picking the choice
+- [ ] Write documentation for deployment + run service as container inside SystemD
+- [ ] Add environment deployment variables
+- [ ] Add error handling of backend responses
+- [ ] Allow select whole column in table when picking the choice
+- [ ] Add Docker Compose for orchestrating both services

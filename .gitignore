@@ -1,15 +1,22 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# ===================
+# Frontend (Node.js)
+# ===================
+
 # dependencies
-/node_modules
+node_modules/
+frontend/node_modules/
 /.pnp
 .pnp.js
 
 # testing
 /coverage
+frontend/coverage/
 
 # production
 /build
+frontend/build/
 
 # misc
 .DS_Store
@@ -21,3 +28,35 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# ===================
+# Backend (Python)
+# ===================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+backend/venv/
+.env
+backend/.env
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+*.iml
+
+# ML artifacts (temporary)
+backend/runs/
+backend/static/augmented/
+backend/*.png
+
+# Logs
+*.log
