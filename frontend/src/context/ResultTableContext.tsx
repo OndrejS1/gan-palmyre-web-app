@@ -1,7 +1,8 @@
-import React, {FC, ReactNode, useContext, useState} from "react";
-import {resizeCanvas} from "../utils/CanvasResizer";
-import {useCanvas} from "./CanvasContext";
-import {OptionValues, options} from "../constants/ButtonOptions";
+import React, { FC, ReactNode, useContext, useState } from "react";
+import { resizeCanvas } from "../utils/CanvasResizer";
+import { useCanvas } from "./CanvasContext";
+import { OptionValues, options } from "../constants/ButtonOptions";
+import { API_ENDPOINTS } from "../config/api";
 
 
 const ResultTableContext = React.createContext(null);
@@ -29,46 +30,46 @@ export type SegmentationResponse = {
 
 export const ResultTableProvider: FC<Props> = ({ children }): any => {
 
-    const { canvasRef, cutSquareFromImage, augmentedImage, setIsLoading, setSegmentationResult,segmentationResult  } = useCanvas();
-    const [predictionResult, setPredictionResult] = useState<Array<PredictionResponse>>([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}]);
+    const { canvasRef, cutSquareFromImage, augmentedImage, setIsLoading, setSegmentationResult, segmentationResult } = useCanvas();
+    const [predictionResult, setPredictionResult] = useState<Array<PredictionResponse>>([{ "class": " ", "probability": "", "choice": false }, { "class": " ", "probability": "", "choice": false }, { "class": " ", "probability": "", "choice": false }]);
     const [savedResults, setSavedResult] = useState<Array<SavedResult>>([]);
     const [lastEvaluatedImage, setLastEvaluatedImage] = useState(null);
     const [reload, setReload] = useState(false);
     const palmyreUnicodeMap = {
-        "aleph":"\uD802\uDC60",
-        "beth":"\uD802\uDC61",
-        "gimel":"\uD802\uDC62",
-        "daleth":"\uD802\uDC63",
-        "he":"\uD802\uDC64",
-        "waw":"\uD802\uDC65",
-        "zayin":"\uD802\uDC66",
-        "heth":"\uD802\uDC67",
-        "teth":"\uD802\uDC68",
-        "yodh":"\uD802\uDC69",
-        "kaph":"\uD802\uDC6A",
-        "lamedh":"\uD802\uDC6B",
-        "mem":"\uD802\uDC6C",
-        "nun_final":"\uD802\uDC6D",
-        "nun":"\uD802\uDC6E",
-        "samekh":"\uD802\uDC6F",
-        "ayin":"\uD802\uDC70",
-        "pe":"\uD802\uDC71",
-        "sadhe":"\uD802\uDC72",
-        "qoph":"\uD802\uDC73",
-        "resh":"\uD802\uDC74",
-        "resh-daleth":"\uD802\uDC74",
-        "shin":"\uD802\uDC75",
-        "taw":"\uD802\uDC76",
-        "left":"\uD802\uDC77",
-        "right":"\uD802\uDC78",
-        "1":"\uD802\uDC79",
-        "2":"\uD802\uDC7A",
-        "3":"\uD802\uDC7B",
-        "4":"\uD802\uDC7C",
-        "5":"\uD802\uDC7D",
-        "10":"\uD802\uDC7E",
-        "100":"\uD802\uDC7E",
-        "20":"\uD802\uDC7F"
+        "aleph": "\uD802\uDC60",
+        "beth": "\uD802\uDC61",
+        "gimel": "\uD802\uDC62",
+        "daleth": "\uD802\uDC63",
+        "he": "\uD802\uDC64",
+        "waw": "\uD802\uDC65",
+        "zayin": "\uD802\uDC66",
+        "heth": "\uD802\uDC67",
+        "teth": "\uD802\uDC68",
+        "yodh": "\uD802\uDC69",
+        "kaph": "\uD802\uDC6A",
+        "lamedh": "\uD802\uDC6B",
+        "mem": "\uD802\uDC6C",
+        "nun_final": "\uD802\uDC6D",
+        "nun": "\uD802\uDC6E",
+        "samekh": "\uD802\uDC6F",
+        "ayin": "\uD802\uDC70",
+        "pe": "\uD802\uDC71",
+        "sadhe": "\uD802\uDC72",
+        "qoph": "\uD802\uDC73",
+        "resh": "\uD802\uDC74",
+        "resh-daleth": "\uD802\uDC74",
+        "shin": "\uD802\uDC75",
+        "taw": "\uD802\uDC76",
+        "left": "\uD802\uDC77",
+        "right": "\uD802\uDC78",
+        "1": "\uD802\uDC79",
+        "2": "\uD802\uDC7A",
+        "3": "\uD802\uDC7B",
+        "4": "\uD802\uDC7C",
+        "5": "\uD802\uDC7D",
+        "10": "\uD802\uDC7E",
+        "100": "\uD802\uDC7E",
+        "20": "\uD802\uDC7F"
     };
     const handleEvaluateClick = (selectionOption: OptionValues) => {
 
@@ -114,7 +115,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         formData.append('imageBase64', augmentedImage);
 
         const response = await fetch(
-            'https://ml-research.pef.czu.cz/api/convert-augmented',
+            API_ENDPOINTS.CONVERT_AUGMENTED,
             {
                 method: 'post',
                 body: formData
@@ -127,7 +128,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
         formData.append('imageBase64', annotationResult);
 
         return fetch(
-            'https://ml-research.pef.czu.cz/api/predict',
+            API_ENDPOINTS.PREDICT,
             {
                 method: 'post',
                 body: formData
@@ -144,7 +145,7 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
 
         setLastEvaluatedImage(canvasData);
         return fetch(
-            'https://ml-research.pef.czu.cz/api/predict-handwritten',
+            API_ENDPOINTS.PREDICT_HANDWRITTEN,
             {
                 method: 'post',
                 body: formData
@@ -163,10 +164,10 @@ export const ResultTableProvider: FC<Props> = ({ children }): any => {
                 const resultClass = table.rows[rowNumber].cells[2].innerText;
                 // @ts-ignore
                 const resultProbability = table.rows[rowNumber].cells[3].innerText;
-                savedResults.push({"palmyreLetter":resultClass, "probability":resultProbability, "savedImg":lastEvaluatedImage})
+                savedResults.push({ "palmyreLetter": resultClass, "probability": resultProbability, "savedImg": lastEvaluatedImage })
                 setSavedResult(savedResults);
                 setReload(!reload);
-                setPredictionResult([{"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}, {"class": " ", "probability": "", "choice": false}])
+                setPredictionResult([{ "class": " ", "probability": "", "choice": false }, { "class": " ", "probability": "", "choice": false }, { "class": " ", "probability": "", "choice": false }])
                 break;
             case options.IMAGE_AUGMENTATION:
                 alert("Have not been implemented yet!");

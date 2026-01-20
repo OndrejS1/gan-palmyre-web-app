@@ -1,0 +1,28 @@
+# Core Flask dependencies
+Flask>=2.2.0
+Flask-Cors>=3.0.10
+Werkzeug>=2.2.0
+
+# ML/AI frameworks - using compatible versions for Python 3.13
+# Note: TensorFlow doesn't support Python 3.13 yet, using tensorflow-cpu or alternatives
+numpy>=1.26.0
+pandas>=2.1.0
+scipy>=1.11.0
+Pillow>=10.0.0
+opencv-python>=4.8.0
+matplotlib>=3.8.0
+
+# PyTorch (for YOLO)
+torch>=2.1.0
+torchvision>=0.16.0
+ultralytics>=8.0.0
+
+# Utilities
+tqdm>=4.66.0
+PyYAML>=6.0
+requests>=2.28.0
+h5py>=3.10.0
+protobuf>=4.0.0
+
+# Note: TensorFlow/Keras might need special handling for Python 3.13
+# Consider using tensorflow-cpu or keras standalone

@@ -2,6 +2,45 @@
 
 A monorepo containing both the React frontend and Python Flask backend for the Palmyre GAN project - an application for handwritten text recognition and image classification using deep learning models.
 
+## Quick Start
+
+### 1. Start the Backend (Python Flask)
+
+```bash
+# Navigate to backend
+cd backend
+
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# venv\Scripts\activate   # Windows
+
+# Install dependencies
+pip install -r Requirements.txt
+
+# Start the server
+python app.py
+```
+> Backend runs at http://localhost:5000
+
+### 2. Start the Frontend (React)
+
+Open a **new terminal**:
+
+```bash
+# Navigate to frontend
+cd frontend
+
+# Install dependencies (first time only)
+npm install
+
+# Start the development server
+npm start
+```
+> Frontend runs at http://localhost:3000
+
+---
+
 ## Project Structure
 
 ```
@@ -38,6 +77,20 @@ Open [http://localhost:3000](http://localhost:3000) to view in browser.
 | `npm start` | Run development server |
 | `npm test` | Run tests in watch mode |
 | `npm run build` | Build for production |
+
+### Environment Configuration
+
+The frontend uses environment variables to configure the backend API URL:
+
+| File | Used When | API URL |
+|------|-----------|---------|
+| `.env.development` | `npm start` | `http://localhost:5000/api` |
+| `.env.production` | `npm run build` | `https://ml-research.pef.czu.cz/api` |
+
+**To override locally**, create `.env.local` with:
+```bash
+REACT_APP_API_BASE_URL=http://your-custom-url/api
+```
 
 ## Backend (Python Flask)
 
