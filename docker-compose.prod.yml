@@ -1,0 +1,36 @@
+# Production Docker Compose for Palmyre GAN
+# Backend: Python Flask API on port 5000
+# Frontend: React app served on port 4000
+
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped
+    # Health check to ensure API is responding
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "4000:4000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    # Health check for frontend
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
