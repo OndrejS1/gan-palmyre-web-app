@@ -2,8 +2,6 @@
 # Backend: Python Flask API on port 5000
 # Frontend: React app served on port 4000
 
-version: '3.8'
-
 services:
   backend:
     build: ./backend
