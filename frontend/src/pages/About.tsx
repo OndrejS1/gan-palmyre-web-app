@@ -33,7 +33,7 @@ function About() {
                 </p>
 
                 <p className="mt-3 text-light">
-                    After experimenting with different methods, the team plans to publish a methodological manual to create a simplified OCR pipeline. In the following two years, the team also hopes to retrain the photographic classifier with the use another augmentation method - variational autoencoders, and to get more real input data from other museums.
+                    After experimenting with different methods, the team plans to publish a manual to create a simplified OCR pipeline. In the following two years, the team also hopes to retrain the photographic classifier with the use another augmentation method - variational autoencoders, and to get more real input data from other museums.
                 </p>
 
                 <p className="mt-3 text-light">

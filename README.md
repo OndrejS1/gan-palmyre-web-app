@@ -7,7 +7,7 @@ A monorepo containing both the React frontend and Python Flask backend for the P
 ### 1. Start the Backend (Python Flask)
 
 ```bash
-# Navigate to backend
+# Navigate to backend d
 cd backend
 
 # Create and activate virtual environment
