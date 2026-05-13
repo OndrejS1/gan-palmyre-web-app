@@ -20,7 +20,7 @@ export const ResultTable: React.FunctionComponent<TableProps> = () => {
             {predictionResult.map((prediction: PredictionResponse, index: number) => (
                 <tr key={"row" + index}>
                     <td>{index + 1}</td>
-                    <td style={{ fontSize: "32px", fontFamily: "Noto Sans Palmyrene" }}>
+                    <td className="large-cell">
                         {palmyreUnicodeMap[prediction.class]}
                     </td>
                     <td>{prediction.class}</td>

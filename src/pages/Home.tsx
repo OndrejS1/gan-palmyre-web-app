@@ -76,7 +76,12 @@ function Home() {
                                 <ToggleButton
                                     active={activeOption === options.IMAGE_ANNOTATION_SENTENCES}
                                     onClick={handleImageAnnotationSentencesClick}
-                                    icon={<ImageAnnotationIcon />}
+                                    icon={
+                                        <>
+                                            <ImageAnnotationIcon />
+                                            <ImageAnnotationIcon />
+                                        </>
+                                    }
                                     label={t('buttons.imageAnnotationSentences')}
                                 />
 
@@ -95,13 +100,18 @@ function Home() {
                     <LoadingOverlay isLoading={isLoading} />
                     <Row>
                         <Col>
-                            {activeOption === options.HANDWRITTEN && <Canvas />}
-                            {activeOption === options.IMAGE_ANNOTATION_CHAR && <ImageAnnotation />}
-
-                            {activeOption === options.IMAGE_AUGMENTATION &&
-                                <TranscriptResultsTable/>
+                            {
+                                activeOption === options.HANDWRITTEN && <Canvas />
                             }
-
+                            {
+                                activeOption === options.IMAGE_ANNOTATION_CHAR && <ImageAnnotation type={'char'} />
+                            }
+                            {
+                                activeOption === options.IMAGE_ANNOTATION_SENTENCES && <ImageAnnotation type={'sentence'} />
+                            }
+                            {
+                                activeOption === options.IMAGE_AUGMENTATION && <TranscriptResultsTable/>
+                            }
                             {
                                 activeOption === options.IMAGE_AUGMENTATION && <AugmentedTranscriptFileUpload />
                             }

@@ -7,7 +7,7 @@ const SegmentationTable: React.FC<SegmentationResponse> = ({ transcript, image }
     return (
         <div>
             <h2 className="my-5 headline-2">{t('headline.imageSegmentationResult')}</h2>
-            <Table striped bordered hover variant="dark" style={{marginTop: 10}}>
+            <Table striped bordered hover variant="dark" className="mt-2">
                 <tbody>
                 {transcript.map((row, rowIndex) => (
                     <tr key={rowIndex} >

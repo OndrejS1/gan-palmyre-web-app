@@ -21,7 +21,8 @@
     "evaluate": "Evaluate",
     "reset": "Reset",
     "save": "Save",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "remove": "Remove"
   },
   "messages": {
     "handwritten": "In order to get the most accurate prediction use the whole space of the canvas for your letter identification.",
@@ -52,6 +53,7 @@
   },
   "common": {
     "error": "Error",
-    "unknownError": "Unknown error"
+    "unknownError": "Unknown error",
+    "dropFilesHere": "Drop files here"
   }
 }

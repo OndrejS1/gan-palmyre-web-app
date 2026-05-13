@@ -1,0 +1,59 @@
+{
+  "headline": {
+    "main": "Překlad palmýrské abecedy",
+    "translations": "Překlady",
+    "imageSegmentationResult": "Výsledek segmentace obrazu"
+  },
+  "logo": "Palmyre OCR",
+  "navbarMenu": {
+    "home": "Domů",
+    "about": "O aplikaci",
+    "gallery": "Galerie",
+    "acknowledgement": "Autoři",
+    "contacts": "Kontakty"
+  },
+  "buttons": {
+    "handwritten": "Ručně psané",
+    "imageAnnotationChar": "Augmentace obrazu - jeden znak",
+    "imageAnnotationSentences": "Augmentace obrazu - slova a věty",
+    "imageAugmentation": "Augmentace obrazu",
+    "segmentationAndTranscript": "Segmentace a Transkript",
+    "evaluate": "Vyhodnotit",
+    "reset": "Reset",
+    "save": "Uložit",
+    "refresh": "Obnovit",
+    "remove": "Odstranit"
+  },
+  "messages": {
+    "handwritten": "Abyste dosáhli co nejpřesnější předpovědi, využijte k identifikaci písmen celý prostor plátna.",
+    "imageAnnotationChar": "Vyberte písmeno pro anotaci přetažením čtverce v cílové oblasti. Po anotaci písmene klikněte na tlačítko Odeslat.",
+    "imageAnnotationSentences": "Vyberte větu pro anotaci přetažením čtverce v cílové oblasti. Po anotaci písmene klikněte na tlačítko Odeslat.",
+    "augmentedTranscript": "Vyberte obrázek pro přepis a odešlete jej k vyhodnocení."
+  },
+  "tables": {
+    "evaluateTable": {
+      "columns": {
+        "number": "#",
+        "transcript": "Transkript",
+        "palmyreLetter": "Palmyre letter",
+        "probability": "Pravděpodobnost",
+        "choice": "Volba"
+      }
+    },
+    "savedTable": {
+      "columns": {
+        "number": "#",
+        "imageSample": "Vzor obrazu",
+        "transcript": "Transkript",
+        "palmyreLetter": "Palmyre letter",
+        "probability": "Pravděpodobnost",
+        "action": "Akce"
+      }
+    }
+  },
+  "common": {
+    "error": "Chyba",
+    "unknownError": "Neznámá chyba",
+    "dropFilesHere": "Sem přetáhněte soubory"
+  }
+}
